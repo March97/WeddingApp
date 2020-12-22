@@ -1,6 +1,6 @@
 using System;
 
-namespace WeddingApp.API
+namespace DatingApp.API
 {
     public class WeatherForecast
     {
