@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using DatingApp.API.Data;
-using DatingApp.API.Models;
-using DatingApp.API.Dtos;
+using WeddingApp.API.Data;
+using WeddingApp.API.Models;
+using WeddingApp.API.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Microsoft.Extensions.Configuration;
@@ -12,7 +12,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
 
-namespace DatingApp.API.Controllers
+namespace WeddingApp.API.Controllers
 {
     // [Authorize]
     [Route("api/[controller]")]

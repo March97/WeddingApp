@@ -2,7 +2,12 @@
     cursor: pointer;
 }
 
-img {
+.logo {
+    max-height: 50px;
+    display: inline;
+}
+
+.user {
     max-height: 50px;
     border: 2px solid white;
     display: inline;

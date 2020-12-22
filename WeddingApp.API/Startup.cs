@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DatingApp.API.Data;
+using WeddingApp.API.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -18,7 +18,7 @@ using System.Text;
 using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
-using DatingApp.API.Helpers;
+using WeddingApp.API.Helpers;
 using AutoMapper;
 
 namespace DatingApp.API

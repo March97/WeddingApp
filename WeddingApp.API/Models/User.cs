@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DatingApp.API.Models
+namespace WeddingApp.API.Models
 {
     public class User
     {
@@ -34,5 +34,7 @@ namespace DatingApp.API.Models
         public string Country { get; set; }
 
         public ICollection<Photo> Photos { get; set; }
+        public ICollection<Place> Places { get; set; }
+        public ICollection<Reservation> Reservations { get; set; }
     }
 }

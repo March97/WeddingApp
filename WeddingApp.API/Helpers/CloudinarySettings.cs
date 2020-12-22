@@ -1,4 +1,4 @@
-namespace DatingApp.API.Helpers
+namespace WeddingApp.API.Helpers
 {
     public class CloudinarySettings
     {

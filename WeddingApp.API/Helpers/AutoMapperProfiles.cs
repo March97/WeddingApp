@@ -1,9 +1,9 @@
 using System.Linq;
 using AutoMapper;
-using DatingApp.API.Dtos;
-using DatingApp.API.Models;
+using WeddingApp.API.Dtos;
+using WeddingApp.API.Models;
 
-namespace DatingApp.API.Helpers
+namespace WeddingApp.API.Helpers
 {
     public class AutoMapperProfiles : Profile
     {
@@ -24,6 +24,8 @@ namespace DatingApp.API.Helpers
             CreateMap<Photo, PhotoForReturnDto>();
             CreateMap<PhotoForCreationDto, Photo>();
             CreateMap<UserForRegisterDto, User>();
+            CreateMap<PlaceForCreationDto, Place>();
+            CreateMap<PlaceForUpdateDto, Place>();
         }
     }
 }

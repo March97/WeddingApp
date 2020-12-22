@@ -1,7 +1,7 @@
-using DatingApp.API.Models;
+using WeddingApp.API.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace DatingApp.API.Data
+namespace WeddingApp.API.Data
 {
     public class DataContext : DbContext
     {
@@ -12,6 +12,11 @@ namespace DatingApp.API.Data
         public DbSet<User> Users { get; set; }
 
         public DbSet<Photo> Photos { get; set; }
+
+        public DbSet<Place> Places { get; set; }
+
+        public DbSet<PhotoForPlace> PhotosForPlaces { get; set; }
         
+        public DbSet<Reservation> Reservations { get; set; }
     }
 }

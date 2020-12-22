@@ -1,8 +1,8 @@
 using System;
 
-namespace WeddingApp.API.Dtos
+namespace WeddingApp.API.Models
 {
-    public class PhotoForReturnDto
+    public class PhotoForPlace
     {
         public int Id { get; set; }
 
@@ -15,5 +15,9 @@ namespace WeddingApp.API.Dtos
         public bool IsMain { get; set; }
 
         public string PublicId { get; set; }
+
+        public Place Place { get; set; }
+
+        public int PlaceId { get; set; }
     }
 }

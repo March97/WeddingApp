@@ -4,14 +4,14 @@ using WeddingApp.API.Models;
 
 namespace WeddingApp.API.Data
 {
-    public interface IDatingRepository
+    public interface IPlaceRepository
     {
          void Add<T>(T entity) where T: class;
          void Delete<T>(T entity)  where T: class;
         Task<bool> SaveAll();
-        Task<IEnumerable<User>> GetUsers();
-        Task<User> GetUser(int id);
-        Task<Photo> GetPhoto(int id);
-        Task<Photo> GetMainPhotoForUser(int userId);
+        Task<IEnumerable<Place>> GetPlaces();
+        Task<Place> GetPlace(int id);
+        Task<PhotoForPlace> GetPhoto(int id);
+        Task<PhotoForPlace> GetMainPhotoForPlace(int userId);
     }
 }

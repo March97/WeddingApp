@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using DatingApp.API.Models;
+using WeddingApp.API.Models;
 using Newtonsoft.Json;
 
-namespace DatingApp.API.Data
+namespace WeddingApp.API.Data
 {
     public class Seed
     {

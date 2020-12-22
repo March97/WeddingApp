@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DatingApp.API.Models;
+using WeddingApp.API.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace DatingApp.API.Data
+namespace WeddingApp.API.Data
 {
     public class DatingRepository : IDatingRepository
     {
