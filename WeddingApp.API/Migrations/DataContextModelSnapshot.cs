@@ -31,9 +31,6 @@ namespace WeddingApp.API.Migrations
                     b.Property<bool>("IsMain")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("PlaceId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("PublicId")
                         .HasColumnType("TEXT");
 
@@ -44,8 +41,6 @@ namespace WeddingApp.API.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PlaceId");
 
                     b.HasIndex("UserId");
 
@@ -119,15 +114,15 @@ namespace WeddingApp.API.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("OwnerId")
+                    b.Property<int>("Price")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Price")
+                    b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OwnerId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Places");
                 });
@@ -231,10 +226,6 @@ namespace WeddingApp.API.Migrations
 
             modelBuilder.Entity("WeddingApp.API.Models.Photo", b =>
                 {
-                    b.HasOne("WeddingApp.API.Models.Place", null)
-                        .WithMany("Photos")
-                        .HasForeignKey("PlaceId");
-
                     b.HasOne("WeddingApp.API.Models.User", "User")
                         .WithMany("Photos")
                         .HasForeignKey("UserId")
@@ -245,7 +236,7 @@ namespace WeddingApp.API.Migrations
             modelBuilder.Entity("WeddingApp.API.Models.PhotoForPlace", b =>
                 {
                     b.HasOne("WeddingApp.API.Models.Place", "Place")
-                        .WithMany()
+                        .WithMany("Photos")
                         .HasForeignKey("PlaceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -253,9 +244,9 @@ namespace WeddingApp.API.Migrations
 
             modelBuilder.Entity("WeddingApp.API.Models.Place", b =>
                 {
-                    b.HasOne("WeddingApp.API.Models.User", "Owner")
+                    b.HasOne("WeddingApp.API.Models.User", "User")
                         .WithMany("Places")
-                        .HasForeignKey("OwnerId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

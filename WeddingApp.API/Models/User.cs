@@ -36,5 +36,12 @@ namespace WeddingApp.API.Models
         public ICollection<Photo> Photos { get; set; }
         public ICollection<Place> Places { get; set; }
         public ICollection<Reservation> Reservations { get; set; }
+
+        public User()
+        {
+            Photos = new HashSet<Photo>();
+            Places = new HashSet<Place>();
+            Reservations = new HashSet<Reservation>();
+        }
     }
 }

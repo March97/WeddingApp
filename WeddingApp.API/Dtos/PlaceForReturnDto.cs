@@ -1,15 +1,12 @@
 using System;
-using System.Collections.Generic;
 
-namespace WeddingApp.API.Models
+namespace WeddingApp.API.Dtos
 {
-    public class Place
+    public class PlaceForReturnDto
     {
         public int Id { get; set; }
 
-        public User User { get; set; }
-
-        public int UserId { get; set; }
+        public int OwnerId { get; set; }
 
         public string Name { get; set; }
 
@@ -32,9 +29,5 @@ namespace WeddingApp.API.Models
         public string Bonuses { get; set; }
 
         public string Description { get; set; }
-        
-        public ICollection<PhotoForPlace> Photos { get; set; }
-
-        public ICollection<Reservation> Reservations { get; set; }
     }
 }

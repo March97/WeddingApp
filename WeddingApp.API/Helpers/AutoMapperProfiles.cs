@@ -26,6 +26,7 @@ namespace WeddingApp.API.Helpers
             CreateMap<UserForRegisterDto, User>();
             CreateMap<PlaceForCreationDto, Place>();
             CreateMap<PlaceForUpdateDto, Place>();
+            CreateMap<Place, PlaceForReturnDto>();
         }
     }
 }
