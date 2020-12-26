@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using WeddingApp.API.Models;
 
 namespace WeddingApp.API.Dtos
 {

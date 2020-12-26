@@ -34,12 +34,26 @@ namespace WeddingApp.API.Models
         public string Country { get; set; }
 
         public ICollection<Photo> Photos { get; set; }
+
+        public ICollection<Like> Likers { get; set; }
+
+        public ICollection<Like> Likees { get; set; }
+
+        public ICollection<Message> MessagesSent { get; set; }
+
+        public ICollection<Message> MessagesReceived { get; set; }
+        
         public ICollection<Place> Places { get; set; }
+        
         public ICollection<Reservation> Reservations { get; set; }
 
         public User()
         {
             Photos = new HashSet<Photo>();
+            Likers = new HashSet<Like>();
+            Likees = new HashSet<Like>();
+            MessagesSent = new HashSet<Message>();
+            MessagesReceived = new HashSet<Message>();
             Places = new HashSet<Place>();
             Reservations = new HashSet<Reservation>();
         }

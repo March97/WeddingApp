@@ -21,7 +21,7 @@ using Microsoft.AspNetCore.Http;
 using WeddingApp.API.Helpers;
 using AutoMapper;
 
-namespace DatingApp.API
+namespace WeddingApp.API
 {
     public class Startup
     {
@@ -46,7 +46,6 @@ namespace DatingApp.API
             services.AddAutoMapper(typeof(DatingRepository).Assembly);
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IDatingRepository, DatingRepository>();
-            services.AddScoped<IPlaceRepository, PlaceRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {
                     options.TokenValidationParameters = new TokenValidationParameters
@@ -57,6 +56,7 @@ namespace DatingApp.API
                         ValidateAudience = false
                     };
                 });
+            services.AddScoped<LogUserActivity>();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
