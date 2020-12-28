@@ -38,6 +38,8 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { ListsResolver } from './_resolvers/lists.resolver';
 import { MessagesResolver } from './_resolvers/messages.resolver';
 import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
+import { PlacesCreateComponent } from './places/places-create/places-create.component';
+import { PlacesCreateResolver } from './_resolvers/places-create.resolver';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -63,7 +65,8 @@ export function tokenGetter() {
       MemberDetailComponent,
       MemberEditComponent,
       PhotoEditorComponent,
-      MemberMessagesComponent
+      MemberMessagesComponent,
+      PlacesCreateComponent
    ],
   imports: [
     BrowserModule,
@@ -99,7 +102,8 @@ export function tokenGetter() {
     MemberEditResolver,
     PreventUnsavedChanges,
     ListsResolver,
-    MessagesResolver
+    MessagesResolver,
+    PlacesCreateResolver
     // { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig }
   ],
   bootstrap: [AppComponent]

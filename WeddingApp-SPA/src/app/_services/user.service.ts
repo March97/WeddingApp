@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Message } from '../_models/message';
 import { PaginatedResult } from '../_models/pagination';
+import { Place } from '../_models/place';
 import { User } from '../_models/user';
 
 // const httpOptions = {
@@ -117,5 +118,9 @@ export class UserService {
   markAsRead(userId: number, messageId: number) {
     return this.http.post(this.baseUrl + 'users/' + userId + '/messages/' + messageId + '/read', {})
       .subscribe();
+  }
+
+  createPlace(userId: number, place: Place) {
+    return this.http.post(this.baseUrl + 'users/' + userId + '/places', place);
   }
 }

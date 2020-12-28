@@ -6,7 +6,7 @@ namespace WeddingApp.API.Dtos
     {
         public int Id { get; set; }
 
-        public int OwnerId { get; set; }
+        public int UserId { get; set; }
 
         public string Name { get; set; }
 
