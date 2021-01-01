@@ -2,71 +2,77 @@
   <h2 class="text-center text-primary mt-3">Add your place</h2>
   <hr>
 
-  <div class="form-group">
-    <input type="text" [ngClass]="{'is-invalid': placeForm.get('name').errors 
-      && placeForm.get('name').touched}" class="form-control" formControlName="name" placeholder="Name">
-    <div class="invalid-feedback">Please choose a username</div>
+  <div class="container-sm">
+    <div class="form-group">
+      <input type="text" [ngClass]="{'is-invalid': placeForm.get('name').errors 
+        && placeForm.get('name').touched}" class="form-control" formControlName="name" placeholder="Name">
+      <div class="invalid-feedback">Please choose a username</div>
+    </div>
+  
+    <div class="form-group">
+      <input type="text" [ngClass]="{'is-invalid': placeForm.get('country').errors 
+        && placeForm.get('country').touched}" class="form-control" formControlName="country" placeholder="Country">
+      <div class="invalid-feedback">Please choose a country</div>
+    </div>
+  
+    <div class="form-group">
+      <input type="text" [ngClass]="{'is-invalid': placeForm.get('city').errors 
+        && placeForm.get('city').touched}" class="form-control" formControlName="city" placeholder="City">
+      <div class="invalid-feedback">Please choose a city</div>
+    </div>
+  
+    <div class="form-group">
+      <input type="text" [ngClass]="{'is-invalid': placeForm.get('address').errors 
+        && placeForm.get('address').touched}" class="form-control" formControlName="address" placeholder="Address">
+      <div class="invalid-feedback">Please choose a address</div>
+    </div>
+  
+    <div class="form-group">
+      <input type="text" [ngClass]="{'is-invalid': placeForm.get('facilities').errors 
+        && placeForm.get('facilities').touched}" class="form-control" formControlName="facilities" placeholder="Facilities">
+      <div class="invalid-feedback">Please choose a facilities</div>
+    </div>
+  
+    <div class="form-group">
+      <input type="number" [ngClass]="{'is-invalid': placeForm.get('capacity').errors 
+        && placeForm.get('capacity').touched}" class="form-control" formControlName="capacity" placeholder="Capacity">
+      <div class="invalid-feedback">Please choose a capacity</div>
+    </div>
+  
+    <div class="form-group">
+      <input type="number" [ngClass]="{'is-invalid': placeForm.get('price').errors 
+        && placeForm.get('price').touched}" class="form-control" formControlName="price" placeholder="Price">
+      <div class="invalid-feedback">Please choose a price</div>
+    </div>
+  
+    <div class="form-group">
+      <input type="text" [ngClass]="{'is-invalid': placeForm.get('inPrice').errors 
+        && placeForm.get('inPrice').touched}" class="form-control" formControlName="inPrice" placeholder="What's included in price?">
+      <div class="invalid-feedback">Please choose a field</div>
+    </div>
+  
+    <div class="form-group">
+      <input type="text" [ngClass]="{'is-invalid': placeForm.get('bonuses').errors 
+        && placeForm.get('bonuses').touched}" class="form-control" formControlName="bonuses" placeholder="Bonuses">
+      <div class="invalid-feedback">Please choose a bonuses</div>
+    </div>
+  
+    <div class="form-group">
+      <input type="text" [ngClass]="{'is-invalid': placeForm.get('description').errors 
+        && placeForm.get('description').touched}" class="form-control" formControlName="description" placeholder="Description">
+      <div class="invalid-feedback">Please choose a description</div>
+    </div>
+  
+    <h5 class="text-center mt-3">You could add photos later.</h5>
+  
+    <div class="form-group text-center">
+      <button class="btn btn-success mr-2" [disabled]="!placeForm.valid" type="submit">Add</button>
+      <button class="btn btn-info" type="button" (click)="cancel()">Cancel</button>
+    </div>
+
   </div>
 
-  <div class="form-group">
-    <input type="text" [ngClass]="{'is-invalid': placeForm.get('country').errors 
-      && placeForm.get('country').touched}" class="form-control" formControlName="country" placeholder="Country">
-    <div class="invalid-feedback">Please choose a country</div>
-  </div>
 
-  <div class="form-group">
-    <input type="text" [ngClass]="{'is-invalid': placeForm.get('city').errors 
-      && placeForm.get('city').touched}" class="form-control" formControlName="city" placeholder="City">
-    <div class="invalid-feedback">Please choose a city</div>
-  </div>
-
-  <div class="form-group">
-    <input type="text" [ngClass]="{'is-invalid': placeForm.get('address').errors 
-      && placeForm.get('address').touched}" class="form-control" formControlName="address" placeholder="Address">
-    <div class="invalid-feedback">Please choose a address</div>
-  </div>
-
-  <div class="form-group">
-    <input type="text" [ngClass]="{'is-invalid': placeForm.get('facilities').errors 
-      && placeForm.get('facilities').touched}" class="form-control" formControlName="facilities" placeholder="Facilities">
-    <div class="invalid-feedback">Please choose a facilities</div>
-  </div>
-
-  <div class="form-group">
-    <input type="number" [ngClass]="{'is-invalid': placeForm.get('capacity').errors 
-      && placeForm.get('capacity').touched}" class="form-control" formControlName="capacity" placeholder="Capacity">
-    <div class="invalid-feedback">Please choose a capacity</div>
-  </div>
-
-  <div class="form-group">
-    <input type="number" [ngClass]="{'is-invalid': placeForm.get('price').errors 
-      && placeForm.get('price').touched}" class="form-control" formControlName="price" placeholder="Price">
-    <div class="invalid-feedback">Please choose a price</div>
-  </div>
-
-  <div class="form-group">
-    <input type="text" [ngClass]="{'is-invalid': placeForm.get('inPrice').errors 
-      && placeForm.get('inPrice').touched}" class="form-control" formControlName="inPrice" placeholder="What's included in price?">
-    <div class="invalid-feedback">Please choose a field</div>
-  </div>
-
-  <div class="form-group">
-    <input type="text" [ngClass]="{'is-invalid': placeForm.get('bonuses').errors 
-      && placeForm.get('bonuses').touched}" class="form-control" formControlName="bonuses" placeholder="Bonuses">
-    <div class="invalid-feedback">Please choose a bonuses</div>
-  </div>
-
-  <div class="form-group">
-    <input type="text" [ngClass]="{'is-invalid': placeForm.get('description').errors 
-      && placeForm.get('description').touched}" class="form-control" formControlName="description" placeholder="Description">
-    <div class="invalid-feedback">Please choose a description</div>
-  </div>
-
-  <h5 class="text-center mt-3">You could add photos later.</h5>
-
-  <div class="form-group text-center">
-    <button class="btn btn-success mr-2" [disabled]="!placeForm.valid" type="submit">Add</button>
-    <button class="btn btn-info" type="button" (click)="cancel()">Cancel</button>
-  </div>
+  
 
 </form>

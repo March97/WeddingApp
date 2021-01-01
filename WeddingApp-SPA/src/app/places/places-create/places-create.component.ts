@@ -47,7 +47,7 @@ export class PlacesCreateComponent implements OnInit {
       }, error => {
         this.alertify.error(error);
       }, () => {
-        this.router.navigate(['/members']);
+        this.router.navigate(['/places']);
       });
     }
     console.log(this.placeForm.value);

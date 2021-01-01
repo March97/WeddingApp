@@ -14,4 +14,5 @@ export interface Place {
     bonuses?: string;
     description?: string;
     photos?: Photo[];
+    photoUrl?: string;
 }

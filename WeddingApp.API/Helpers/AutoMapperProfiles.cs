@@ -31,6 +31,9 @@ namespace WeddingApp.API.Helpers
             CreateMap<PlaceForCreationDto, Place>();
             CreateMap<PlaceForUpdateDto, Place>();
             CreateMap<Place, PlaceForReturnDto>();
+            CreateMap<Place, PlacesForListDto>()
+                .ForMember(dest => dest.PhotoUrl, opt => opt.MapFrom(src => src.Photos.
+                FirstOrDefault(p => p.IsMain).Url));
         }
     }
 }

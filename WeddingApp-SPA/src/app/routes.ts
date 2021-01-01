@@ -6,6 +6,7 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 import { MemberListComponent } from './members/member-list/member-list.component';
 import { MessagesComponent } from './messages/messages.component';
 import { PlacesCreateComponent } from './places/places-create/places-create.component';
+import { PlacesListForUserComponent } from './places/places-list-for-user/places-list-for-user.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { ListsResolver } from './_resolvers/lists.resolver';
@@ -14,6 +15,7 @@ import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { MemberListResolver } from './_resolvers/member-list.resolver';
 import { MessagesResolver } from './_resolvers/messages.resolver';
 import { PlacesCreateResolver } from './_resolvers/places-create.resolver';
+import { PlacesListForUserResolver } from './_resolvers/places-list-for-user';
 
 export const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -31,6 +33,7 @@ export const appRoutes: Routes = [
             { path: 'messages', component: MessagesComponent, resolve:  {messages: MessagesResolver}},
             { path: 'lists', component: ListsComponent, resolve: {users: ListsResolver}},
             { path: 'places/create', component: PlacesCreateComponent, resolve: {users: PlacesCreateResolver}},
+            { path: 'places', component: PlacesListForUserComponent, resolve: {users: PlacesListForUserResolver}},
         ]
     },
     { path: '**', redirectTo: '', pathMatch: 'full' }

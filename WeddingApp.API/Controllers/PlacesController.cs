@@ -6,6 +6,7 @@ using WeddingApp.API.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WeddingApp.API.Models;
+using System.Collections.Generic;
 
 namespace WeddingApp.API.Controllers
 {
@@ -52,14 +53,24 @@ namespace WeddingApp.API.Controllers
             return BadRequest("Could not add the place");
         }
 
+        // [HttpGet]
+        // public async Task<IActionResult> GetPlaces()
+        // {
+        //     var places = await _repo.GetPlaces();
+
+        //     //var placesToReturn = _mapper.Map<IEnumerable<PlacesForListDto>>(places);
+
+        //     return Ok(places);
+        // }
+
         [HttpGet]
-        public async Task<IActionResult> GetPlaces()
+        public async Task<IActionResult> GetPlacesForUser(int userId)
         {
-            var places = await _repo.GetPlaces();
+            var places = await _repo.GetPlacesForUser(userId);
 
-            //var placesToReturn = _mapper.Map<IEnumerable<PlacesForListDto>>(places);
+            var placesToReturn = _mapper.Map<IEnumerable<PlacesForListDto>>(places);
 
-            return Ok(places);
+            return Ok(placesToReturn);
         }
 
         [HttpGet("{id}", Name="GetPlaces")]

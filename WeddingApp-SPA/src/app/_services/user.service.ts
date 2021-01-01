@@ -123,4 +123,8 @@ export class UserService {
   createPlace(userId: number, place: Place) {
     return this.http.post(this.baseUrl + 'users/' + userId + '/places', place);
   }
+
+  getPlacesForUser(userId: number) {
+    return this.http.get(this.baseUrl + 'users/' + userId + '/places');
+  }
 }

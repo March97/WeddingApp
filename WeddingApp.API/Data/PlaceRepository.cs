@@ -50,6 +50,14 @@ namespace WeddingApp.API.Data
             return places;
         }
 
+        public async Task<IEnumerable<Place>> GetPlacesForUser(int userId)
+        {
+            var places = await _context.Places.Where(u => u.UserId == userId).Include(p => p.Photos).ToListAsync();
+            //var places = await _context.Places.Include(p => p.Photos).ToListAsync();
+
+            return places;
+        }
+
         public async Task<bool> SaveAll()
         {
             return await _context.SaveChangesAsync() > 0;
