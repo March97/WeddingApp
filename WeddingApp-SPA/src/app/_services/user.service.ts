@@ -127,4 +127,13 @@ export class UserService {
   getPlacesForUser(userId: number) {
     return this.http.get(this.baseUrl + 'users/' + userId + '/places');
   }
+
+  updatePlace(userId: number, placeId: number, place: Place) {
+    return this.http.put(this.baseUrl + 'users/' + userId + '/places/' + placeId, place);
+  }
+
+  getPlace(userId: number, id): Observable<Place> {
+    return this.http.get<Place>(this.baseUrl + 'users/' + userId + '/places/' + id);
+    // return this.http.get<User>(this.baseUrl + 'users/' + id, httpOptions);
+  }
 }

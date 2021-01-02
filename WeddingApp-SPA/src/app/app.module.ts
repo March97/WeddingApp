@@ -38,11 +38,13 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { ListsResolver } from './_resolvers/lists.resolver';
 import { MessagesResolver } from './_resolvers/messages.resolver';
 import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
-import { PlacesCreateComponent } from './places/places-create/places-create.component';
+import { PlacesCreateComponent } from './places/place-create/place-create.component';
 import { PlacesCreateResolver } from './_resolvers/places-create.resolver';
 import { PlacesListForUserComponent } from './places/places-list-for-user/places-list-for-user.component';
-import { PlacesListForUserResolver } from './_resolvers/places-list-for-user';
+import { PlacesListForUserResolver } from './_resolvers/places-list-for-user.resolver';
 import { PlaceCardComponent } from './places/place-card/place-card.component';
+import { PlaceEditComponent } from './places/place-edit/place-edit.component';
+import { PlaceEditResolver } from './_resolvers/place-edit.resolver';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -71,7 +73,8 @@ export function tokenGetter() {
       MemberMessagesComponent,
       PlacesCreateComponent,
       PlacesListForUserComponent,
-      PlaceCardComponent
+      PlaceCardComponent,
+      PlaceEditComponent
    ],
   imports: [
     BrowserModule,
@@ -109,7 +112,8 @@ export function tokenGetter() {
     ListsResolver,
     MessagesResolver,
     PlacesCreateResolver,
-    PlacesListForUserResolver
+    PlacesListForUserResolver,
+    PlaceEditResolver
     // { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig }
   ],
   bootstrap: [AppComponent]

@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { PlacesCreateComponent } from './places-create.component';
+import { PlacesCreateComponent } from './place-create.component';
 
 describe('PlacesCreateComponent', () => {
   let component: PlacesCreateComponent;

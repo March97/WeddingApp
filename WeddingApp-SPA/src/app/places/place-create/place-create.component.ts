@@ -9,8 +9,8 @@ import { UserService } from 'src/app/_services/user.service';
 
 @Component({
   selector: 'app-places-create',
-  templateUrl: './places-create.component.html',
-  styleUrls: ['./places-create.component.css']
+  templateUrl: './place-create.component.html',
+  styleUrls: ['./place-create.component.css']
 })
 export class PlacesCreateComponent implements OnInit {
   @Output() cancelCreate = new EventEmitter();

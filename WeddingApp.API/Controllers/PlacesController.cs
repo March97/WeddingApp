@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WeddingApp.API.Models;
 using System.Collections.Generic;
+using System;
 
 namespace WeddingApp.API.Controllers
 {
@@ -36,32 +37,16 @@ namespace WeddingApp.API.Controllers
 
             var placeToCreate = _mapper.Map<Place>(placeForCreationDto);
 
-            // placeToCreate.UserId = userId;
-
-            // if (userFromRepo.Places == null) {
-            //     userFromRepo.Places = new ICollection();
-            // }
             userFromRepo.Places.Add(placeToCreate);
 
             if (await _repoDating.SaveAll())
             {
                 var placeToReturn = _mapper.Map<PlaceForReturnDto>(placeToCreate);
-                // return CreatedAtRoute("GetPlace", new { userId = userId, id = placeToCreate.Id}, placeToReturn);
                 return Ok();
             }
 
             return BadRequest("Could not add the place");
         }
-
-        // [HttpGet]
-        // public async Task<IActionResult> GetPlaces()
-        // {
-        //     var places = await _repo.GetPlaces();
-
-        //     //var placesToReturn = _mapper.Map<IEnumerable<PlacesForListDto>>(places);
-
-        //     return Ok(places);
-        // }
 
         [HttpGet]
         public async Task<IActionResult> GetPlacesForUser(int userId)
@@ -78,25 +63,40 @@ namespace WeddingApp.API.Controllers
         {
             var place = await _repo.GetPlace(id);
 
-            //var placeToReturn = _mapper.Map<PlaceFor>(user);
+            var placeToReturn = _mapper.Map<PlaceForReturnDto>(place);
 
-            return Ok(place);
+            return Ok(placeToReturn);
         }
 
-        // [HttpPut("{id}")]
-        // public async Task<IActionResult> UpdateUser(int id, UserForUpdateDto userForUpdateDto)
-        // {
-        //     if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-        //         return Unauthorized();
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdatePlace(int userId, int id, PlaceForUpdateDto placeForUpdateDto)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
 
-        //     var userFromRepo = await _repo.GetUser(id);
+            var placeFromRepo = await _repo.GetPlace(id);
 
-        //     _mapper.Map(userForUpdateDto, userFromRepo);
+            _mapper.Map(placeForUpdateDto, placeFromRepo);
 
-        //     if (await _repo.SaveAll())
-        //         return NoContent();
+            if (await _repo.SaveAll())
+                return NoContent();
 
-        //     throw new Exception($"Updating user {id} failed on save");
-        // }
+            throw new Exception($"Updating place {id} failed on save");
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePlace(int userId, int id) 
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            var placeFromRepo = await _repo.GetPlace(id);
+            _repo.Delete(placeFromRepo);
+
+            if (await _repo.SaveAll())
+                return Ok();
+
+            return BadRequest($"Failed to delete the place id: {id}");
+        }
     }
 }
