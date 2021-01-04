@@ -45,6 +45,7 @@ import { PlacesListForUserResolver } from './_resolvers/places-list-for-user.res
 import { PlaceCardComponent } from './places/place-card/place-card.component';
 import { PlaceEditComponent } from './places/place-edit/place-edit.component';
 import { PlaceEditResolver } from './_resolvers/place-edit.resolver';
+import { PlacePhotoEditorComponent } from './places/place-photo-editor/place-photo-editor.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -74,7 +75,8 @@ export function tokenGetter() {
       PlacesCreateComponent,
       PlacesListForUserComponent,
       PlaceCardComponent,
-      PlaceEditComponent
+      PlaceEditComponent,
+      PlacePhotoEditorComponent
    ],
   imports: [
     BrowserModule,

@@ -136,4 +136,12 @@ export class UserService {
     return this.http.get<Place>(this.baseUrl + 'users/' + userId + '/places/' + id);
     // return this.http.get<User>(this.baseUrl + 'users/' + id, httpOptions);
   }
+
+  setMainPhotoForPlace(userId: number, placeId: number, id: number) {
+    return this.http.post(this.baseUrl + 'users/' + userId + '/places/' + placeId + '/photos/' + id + '/setMain', {});
+  }
+
+  deletePhotoForPlace(userId: number, placeId: number, id: number) {
+    return this.http.delete(this.baseUrl + 'users/' + userId + '/places/' + placeId +'/photos/' + id);
+  }
 }

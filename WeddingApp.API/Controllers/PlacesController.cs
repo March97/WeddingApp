@@ -63,9 +63,9 @@ namespace WeddingApp.API.Controllers
         {
             var place = await _repo.GetPlace(id);
 
-            var placeToReturn = _mapper.Map<PlaceForReturnDto>(place);
+            //var placeToReturn = _mapper.Map<PlaceForReturnDto>(place);
 
-            return Ok(placeToReturn);
+            return Ok(place);
         }
 
         [HttpPut("{id}")]

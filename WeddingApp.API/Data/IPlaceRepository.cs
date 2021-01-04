@@ -12,7 +12,7 @@ namespace WeddingApp.API.Data
         Task<IEnumerable<Place>> GetPlaces();
         Task<Place> GetPlace(int id);
         Task<PhotoForPlace> GetPhoto(int id);
-        Task<PhotoForPlace> GetMainPhotoForPlace(int userId);
+        Task<PhotoForPlace> GetMainPhotoForPlace(int placeId);
 
         Task<IEnumerable<Place>> GetPlacesForUser(int userId);
     }

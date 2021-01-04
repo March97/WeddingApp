@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Place } from 'src/app/_models/place';
@@ -42,14 +42,15 @@ export class PlaceEditComponent implements OnInit {
     });
   }
 
-  updateMainPhoto(photoUrl) {
-    this.place.photoUrl = photoUrl;
+  updateMainPhoto(a?: any) {
+    this.place.photoUrl = this.place.photos.find(p => p.isMain == true).url;
   }
 
   loadPlace() {
     this.userService.getPlace(this.authService.decodedToken.nameid, +this.route.snapshot.params['id'])
       .subscribe((place: Place) => {
         this.place = place;
+        this.updateMainPhoto();
       }, error => {
         this.alertify.error(error);
       });
