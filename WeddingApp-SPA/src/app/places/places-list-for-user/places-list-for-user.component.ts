@@ -19,10 +19,10 @@ export class PlacesListForUserComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    this.loadUsers();
+    this.loadPlaces();
   }
 
-  loadUsers() {
+  loadPlaces() {
     this.userService.getPlacesForUser(this.authService.decodedToken.nameid).subscribe((places: Place[]) => {
       this.places = places;
     }, error => {

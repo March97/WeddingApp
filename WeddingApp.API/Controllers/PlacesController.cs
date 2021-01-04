@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using WeddingApp.API.Models;
 using System.Collections.Generic;
 using System;
+using WeddingApp.API.Helpers;
 
 namespace WeddingApp.API.Controllers
 {
@@ -51,9 +52,29 @@ namespace WeddingApp.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetPlacesForUser(int userId)
         {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
             var places = await _repo.GetPlacesForUser(userId);
 
             var placesToReturn = _mapper.Map<IEnumerable<PlacesForListDto>>(places);
+
+            return Ok(placesToReturn);
+        }
+
+        [HttpGet("list")]
+        public async Task<IActionResult> GetPlaces([FromQuery]PlaceParams placeParams)
+        {
+            // var places = await _repo.GetPlaces();
+
+            // var placesToReturn = _mapper.Map<IEnumerable<PlacesForListDto>>(places);
+
+            var places = await _repo.GetPlaces(placeParams);
+
+            var placesToReturn = _mapper.Map<IEnumerable<PlacesForListDto>>(places);
+
+            Response.AddPagination(places.CurrentPage, places.PageSize, 
+                places.TotalCount, places.TotalPages);
 
             return Ok(placesToReturn);
         }
