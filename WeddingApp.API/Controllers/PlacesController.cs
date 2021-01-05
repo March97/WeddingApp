@@ -112,6 +112,10 @@ namespace WeddingApp.API.Controllers
                 return Unauthorized();
 
             var placeFromRepo = await _repo.GetPlace(id);
+
+            if (userId != placeFromRepo.UserId)
+                return Unauthorized();
+
             _repo.Delete(placeFromRepo);
 
             if (await _repo.SaveAll())
