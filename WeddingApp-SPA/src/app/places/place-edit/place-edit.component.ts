@@ -1,6 +1,6 @@
 import { Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Place } from 'src/app/_models/place';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { AuthService } from 'src/app/_services/auth.service';
@@ -23,7 +23,7 @@ export class PlaceEditComponent implements OnInit {
     }
   }
   
-  constructor(private route: ActivatedRoute, private alertify: AlertifyService,
+  constructor(private route: ActivatedRoute, private alertify: AlertifyService, private router: Router,
     private userService: UserService, private authService: AuthService) { }
 
   ngOnInit() {
@@ -54,6 +54,17 @@ export class PlaceEditComponent implements OnInit {
       }, error => {
         this.alertify.error(error);
       });
+  }
+
+  deletePlace() {
+    this.alertify.confirm('Are you sure you want to delete this message?', () => {
+      this.userService.deletePlace(this.authService.decodedToken.nameid, this.place.id).subscribe(() => {
+        this.alertify.success('Place has been deleted');
+        this.router.navigate(['/places']);
+      }, error => {
+        this.alertify.error('Failed to delte the message');
+      });
+    });
   }
 
 }

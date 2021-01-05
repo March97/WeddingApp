@@ -132,6 +132,10 @@ export class UserService {
     return this.http.put(this.baseUrl + 'users/' + userId + '/places/' + placeId, place);
   }
 
+  deletePlace(userId: number, placeId: number) {
+    return this.http.delete(this.baseUrl + 'users/' + userId + '/places/' + placeId);
+  }
+
   getPlace(userId: number, id): Observable<Place> {
     return this.http.get<Place>(this.baseUrl + 'users/' + userId + '/places/' + id);
     // return this.http.get<User>(this.baseUrl + 'users/' + id, httpOptions);

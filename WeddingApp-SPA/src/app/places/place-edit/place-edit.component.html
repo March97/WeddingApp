@@ -29,6 +29,7 @@
         </div>
         <div class="card-footer">
           <button [disabled]="!editForm.dirty" form="editForm" class="btn btn-success btn-block">Save Changes</button>
+          <button class="btn btn-danger btn-block" (click)="deletePlace()">Delete Place</button>
         </div>
       </div>
     </div>
