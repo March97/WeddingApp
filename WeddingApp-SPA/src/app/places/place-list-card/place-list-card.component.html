@@ -1,0 +1,14 @@
+<div class="card mb-4">
+  <div class="card-img-wrapper">
+    <img class="card-img-top" src="{{place.photoUrl || '../../../assets/no-image-found.png'}}" 
+    alt="{{place.name}}" [routerLink]="['/places/detail/', place.id]">
+  </div>
+  <div class="card-body p-1">
+    <h6 class="card-title text-center mb-1">
+      {{place.name}}
+    </h6>
+    <p class="card-text text-muted text-center">{{place.city}}, {{place.address}}</p>
+    <p class="card-text text-muted text-center">Price for person: {{place.price}}</p>
+    <p class="card-text text-muted text-center">Capacity: {{place.capacity}}</p>
+  </div>
+</div>

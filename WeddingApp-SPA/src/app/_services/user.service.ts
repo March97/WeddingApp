@@ -144,4 +144,34 @@ export class UserService {
   deletePhotoForPlace(userId: number, placeId: number, id: number) {
     return this.http.delete(this.baseUrl + 'users/' + userId + '/places/' + placeId +'/photos/' + id);
   }
+
+  getPlaces(userId: number, page?, itemsPerPage?, placeParams?): Observable<PaginatedResult<Place[]>> {
+    const paginatedResult: PaginatedResult<Place[]> = new PaginatedResult<Place[]>();
+
+    let params = new HttpParams();
+
+    if (page != null && itemsPerPage != null) {
+      params = params.append('pageNumber', page);
+      params = params.append('pageSize', itemsPerPage);
+    }
+
+    if (placeParams != null) {
+      params = params.append('minPrice', placeParams.minPrice);
+      params = params.append('maxPrice', placeParams.maxPrice);
+      params = params.append('minCapacity', placeParams.minCapacity);
+      params = params.append('maxCapacity', placeParams.maxCapacity);
+      params = params.append('city', placeParams.city);
+      params = params.append('orderBy', placeParams.orderBy);
+    }
+
+    return this.http.get<Place[]>(this.baseUrl + 'users/' + userId + '/places/list', { observe: 'response', params })
+      .pipe(map(response => {
+        paginatedResult.result = response.body;
+        if (response.headers.get('Pagination') != null) {
+          paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
+        }
+        return paginatedResult;
+      })
+      );
+  }
 }

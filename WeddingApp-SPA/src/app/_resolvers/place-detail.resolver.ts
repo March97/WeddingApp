@@ -4,23 +4,21 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Place } from '../_models/place';
 import { AlertifyService } from '../_services/alertify.service';
+import { AuthService } from '../_services/auth.service';
 import { UserService } from '../_services/user.service';
 
 
 @Injectable()
-export class PlacesListResolver implements Resolve<Place[]> {
+export class PlaceDetailResolver implements Resolve<Place> {
 
-    pageNumber = 1;
-    pageSize = 5;
-
-    constructor(private userService: UserService, 
+    constructor(private userService: UserService, private authService: AuthService,
                 private router: Router, private alertify: AlertifyService) {}
 
-        resolve(route: ActivatedRouteSnapshot): Observable<Place[]> {
-            return this.userService.getPlaces(this.pageNumber, this.pageSize).pipe(
+        resolve(route: ActivatedRouteSnapshot): Observable<Place> {
+            return this.userService.getPlace(this.authService.decodedToken.nameid, route.params['id']).pipe(
                 catchError(error => {
-                    this.alertify.error('Problem retreiving data');
-                    this.router.navigate(['/home']);
+                    this.alertify.error('Problem retreiving your data');
+                    this.router.navigate(['/places/list']);
                     return of(null);
                 })
             );

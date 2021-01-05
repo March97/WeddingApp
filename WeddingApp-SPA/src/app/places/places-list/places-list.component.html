@@ -1,3 +1,73 @@
-<p>
-  places-list works!
-</p>
+<div class="text-center mt-3">
+  <h2>Found {{pagination.totalItems}} places</h2>
+</div>
+
+<div class="container mt-3">
+
+  <form class="form-inline" #form="ngForm" (ngSubmit)="loadPlaces()" novalidate>
+    <div class="form-group">
+      <label for="minPrice">Price From</label>
+      <input type="number" class="form-control ml-1" style="width: 70px" id="minPrice"
+        [(ngModel)]="placeParams.minPrice" name="minPrice">
+    </div>
+  
+    <div class="form-group px-2">
+      <label for="maxPrice">Price To</label>
+      <input type="number" class="form-control ml-1" style="width: 70px" id="maxPrice"
+        [(ngModel)]="placeParams.maxPrice" name="maxPrice">
+    </div>
+
+    <div class="form-group">
+      <label for="minCapacity">Capacity From</label>
+      <input type="number" class="form-control ml-1" style="width: 70px" id="minCapacity"
+        [(ngModel)]="placeParams.minCapacity" name="minCapacity">
+    </div>
+  
+    <div class="form-group px-2">
+      <label for="maxCapacity">Capacity To</label>
+      <input type="number" class="form-control ml-1" style="width: 70px" id="maxCapacity"
+        [(ngModel)]="placeParams.maxCapacity" name="maxCapacity">
+    </div>
+  
+    <div class="form-group px-2">
+      <label for="city">City: </label>
+      <select class="form-control ml-1" style="width: 130px" id="city"
+      [(ngModel)]="placeParams.city" name="city">
+        <option *ngFor="let city of cityList" [value]="city.value">
+          {{city.display}}
+        </option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary" style="margin-left:10px">Apply Filters</button>
+    <button type="button" class="btn btn-info" (click)="resetFilters()" style="margin-left:10px">Reset Filter</button>
+  
+    <div class="col">
+      <div class="btn-group float-right mt-3">
+        <button type="button" name="orderBy" class="btn btn-primary" 
+          [(ngModel)]="placeParams.orderBy" (click)="loadPlaces()" btnRadio="created">Newest Places</button>
+        <button type="button" name="orderBy" class="btn btn-primary" 
+          [(ngModel)]="placeParams.orderBy" (click)="loadPlaces()" btnRadio="price">Cheapest Places</button>
+        <button type="button" name="orderBy" class="btn btn-primary" 
+          [(ngModel)]="placeParams.orderBy" (click)="loadPlaces()" btnRadio="capacity">Lowest Capacity Places</button>
+      </div>
+    </div>
+  </form>
+  <br>
+
+  <div class="row">
+    <div *ngFor="let place of places" class="col-lg-2 col-md-3 col-sm-6" >
+      <app-place-list-card [place]="place"></app-place-list-card>
+    </div>
+  </div>
+</div>
+
+<div class="d-flex justify-content-center">
+  <pagination 
+    [boundaryLinks]="true" 
+    [totalItems]="pagination.totalItems"
+    [itemsPerPage]="pagination.itemsPerPage"
+    [(ngModel)]="pagination.currentPage"
+    (pageChanged)="pageChanged($event)"
+    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+  </pagination>
+</div>

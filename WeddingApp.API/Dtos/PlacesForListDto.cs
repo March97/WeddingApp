@@ -19,5 +19,8 @@ namespace WeddingApp.API.Dtos
         public string Address { get; set; } 
 
         public string PhotoUrl { get; set; }
+
+        public int Price { get; set; }
+        public int Capacity { get; set; }
     }
 }

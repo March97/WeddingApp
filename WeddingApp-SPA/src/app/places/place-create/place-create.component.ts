@@ -17,6 +17,7 @@ export class PlacesCreateComponent implements OnInit {
   user: User;
   place: Place;
   placeForm: FormGroup;
+  cityList = [{value: 'Warszawa', display: 'Warszawa'}, {value: 'Poznań', display: 'Poznań'}, {value: 'Wrocław', display: 'Wrocław'}];
 
   constructor(private userService: UserService, private authService: AuthService, private alertify: AlertifyService,
     private fb: FormBuilder, private router: Router) { }
