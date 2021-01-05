@@ -42,7 +42,7 @@ export const appRoutes: Routes = [
             { path: 'places', component: PlacesListForUserComponent, resolve: {users: PlacesListForUserResolver}},
             { path: 'places/edit/:id', component: PlaceEditComponent, resolve: {users: PlaceEditResolver}},
             { path: 'places/list', component: PlacesListComponent, resolve: {places: PlacesListResolver}},
-            { path: 'places/detail/:id', component: PlaceDetailComponent, resolve: {places: PlaceDetailResolver}}
+            { path: 'places/detail/:id', component: PlaceDetailComponent, resolve: {place: PlaceDetailResolver}}
         ]
     },
     { path: '**', redirectTo: '', pathMatch: 'full' }

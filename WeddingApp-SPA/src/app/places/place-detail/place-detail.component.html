@@ -1,3 +1,54 @@
-<p>
-  place-detail works!
-</p>
+<div class="container mt -4">
+  <div class="row">
+    <h1 class="container ml-1 mt-2">{{place.name}}</h1>
+  </div>
+    <div class="row">
+    <div class="col-sm-4">
+      <div class="card">
+      <img class="card-img-top img-thumbnail" src="{{place.photoUrl || '../../assets/no-image-found.png'}}" alt="{{place.name}}">
+      <div class="card-body">
+        <div>
+          <strong>Location:</strong>
+          <p>{{place.city}}, {{place.country}}, {{place.address}}</p>
+        </div>
+        <div>
+          <strong>Capacity:</strong>
+          <p>{{place.capacity}}</p>
+        </div>
+        <div>
+          <strong>Price:</strong>
+          <p>{{place.price}}</p>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="btn-group d-flex">
+          <button class="btn btn-success w-100">Reserve</button>
+          <button class="btn btn-warning w-100" (click)="selectTab(2)">Message</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="col-sm-8">
+        <div class="tab-panel">
+          <tabset class="member-tabset" #memberTabs>
+            <tab heading="About">
+              <h4>Description</h4>
+              <p>{{place.description}}</p>
+              <h4>What's price included?</h4>
+              <p>{{place.inPrice}}</p>
+              <h4>Facilities</h4>
+              <p>{{place.facilities}}</p>
+              <h4>Bonuses</h4>
+              <p>{{place.bonuses}}</p>
+            </tab>
+            <tab heading="Photos">
+              <ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery>
+            </tab>
+            <tab heading="Messages">
+              <app-member-messages [recipientId]="place.userId"></app-member-messages>
+            </tab>
+          </tabset>
+        </div>
+    </div>
+  </div>
+</div>

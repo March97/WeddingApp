@@ -3,6 +3,7 @@ import { Photo } from "./photo";
 export interface Place {
 
     id: number;
+    userId: number;
     name: string;
     country: string;
     city: string;
