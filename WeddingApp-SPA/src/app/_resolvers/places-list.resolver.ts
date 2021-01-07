@@ -14,7 +14,8 @@ export class PlacesListResolver implements Resolve<Place[]> {
     pageSize = 5;
 
     constructor(private userService: UserService, 
-                private router: Router, private alertify: AlertifyService) {}
+                private router: Router, private alertify: AlertifyService) {
+                }
 
         resolve(route: ActivatedRouteSnapshot): Observable<Place[]> {
             return this.userService.getPlaces(this.pageNumber, this.pageSize).pipe(

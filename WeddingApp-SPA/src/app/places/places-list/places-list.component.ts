@@ -28,12 +28,7 @@ export class PlacesListComponent implements OnInit {
       this.pagination = data['places'].pagination;
     });
 
-    this.placeParams.city = this.user.city;
-    this.placeParams.minPrice = 0;
-    this.placeParams.maxPrice = 100000;
-    this.placeParams.minCapacity = 0;
-    this.placeParams.maxCapacity = 100000;
-    this.placeParams.orderBy = 'created';
+    this.resetFilters();
   }
 
   pageChanged(event: any): void {
@@ -42,7 +37,7 @@ export class PlacesListComponent implements OnInit {
   }
 
   resetFilters(){
-    this.placeParams.city = null;
+    this.placeParams.city = 'Warszawa';
     this.placeParams.minPrice = 0;
     this.placeParams.maxPrice = 100000;
     this.placeParams.minCapacity = 0;
