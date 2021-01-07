@@ -50,6 +50,7 @@ namespace WeddingApp.API.Controllers
             }
             else {
                 resToCreate.Cost = resToCreate.AmountOfGuests * place.Price;
+                resToCreate.Date = resToCreate.Date.Date;
                 _repoRes.Add(resToCreate);
 
                 if (await _repoRes.SaveAll())

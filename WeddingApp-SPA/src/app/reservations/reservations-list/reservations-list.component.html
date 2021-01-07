@@ -1,3 +1,34 @@
-<p>
-  reservations-list works!
-</p>
+<div class="container mt-5">
+
+  <div class="row" *ngIf="reservations.length == 0">
+    <h3>No reservations</h3>
+  </div>
+
+  <div class="row" *ngIf="reservations.length > 0">
+    <div class="row">
+      <h3>Your reservations</h3>
+    </div>
+    <table class="table table-hover" style="cursor: pointer">
+      <tr>
+        <th style="width: 10%">Place</th>
+        <th style="width: 10%">Reserved by</th>
+        <th style="width: 15%">Date</th>
+        <th style="width: 10%">Amount of guests</th>
+        <th style="width: 10%">Cost</th>
+        <th style="width: 35%">Comments</th>
+        <th style="width: 10%"></th>
+      </tr>
+      <tr *ngFor="let reservation of reservations">
+        <td>{{reservation.placeName}}</td>
+        <td>{{reservation.userName}}</td>
+        <td>{{reservation.date}}</td>
+        <td>{{reservation.amountOfGuests}}</td>
+        <td>{{reservation.cost}}</td>
+        <td>{{reservation.comments}}</td>
+        <td>
+          <button class="btn btn-danger" (click)="deleteReservation(reservation.id)">Delete</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

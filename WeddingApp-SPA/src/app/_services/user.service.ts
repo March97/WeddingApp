@@ -185,11 +185,11 @@ export class UserService {
   }
 
   getReservationsForUser(userId: number) {
-    return this.http.get(this.baseUrl + 'users/' + userId + '/reservations');
+    return this.http.get<Reservation[]>(this.baseUrl + 'users/' + userId + '/reservations');
   }
 
   getReservationsForPlace(userId: number, placeId: number) {
-    return this.http.get(this.baseUrl + 'users/' + userId + '/reservations/places/' + placeId);
+    return this.http.get<Reservation[]>(this.baseUrl + 'users/' + userId + '/reservations/places/' + placeId);
   }
 
   deleteReservation(userId: number, id: number) {

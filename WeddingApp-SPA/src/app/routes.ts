@@ -11,6 +11,7 @@ import { PlaceEditComponent } from './places/place-edit/place-edit.component';
 import { PlacesListForUserComponent } from './places/places-list-for-user/places-list-for-user.component';
 import { PlacesListComponent } from './places/places-list/places-list.component';
 import { ReservationCreateComponent } from './reservations/reservation-create/reservation-create.component';
+import { ReservationsListComponent } from './reservations/reservations-list/reservations-list.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { ListsResolver } from './_resolvers/lists.resolver';
@@ -24,6 +25,7 @@ import { PlacesCreateResolver } from './_resolvers/places-create.resolver';
 import { PlacesListForUserResolver } from './_resolvers/places-list-for-user.resolver';
 import { PlacesListResolver } from './_resolvers/places-list.resolver';
 import { ReservationCreateResolver } from './_resolvers/reservation-create.resolver';
+import { ReservationsListResolver } from './_resolvers/reservations-list.resolver';
 
 export const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -46,6 +48,7 @@ export const appRoutes: Routes = [
             { path: 'places/list', component: PlacesListComponent, resolve: {places: PlacesListResolver}},
             { path: 'places/detail/:id', component: PlaceDetailComponent, resolve: {place: PlaceDetailResolver}},
             { path: 'reserve/:id', component: ReservationCreateComponent, resolve: {place: ReservationCreateResolver}},
+            { path: 'reservations', component: ReservationsListComponent, resolve: {reservations: ReservationsListResolver}},
         ]
     },
     { path: '**', redirectTo: '', pathMatch: 'full' }
