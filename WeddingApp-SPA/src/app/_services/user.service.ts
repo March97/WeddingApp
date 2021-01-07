@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { Message } from '../_models/message';
 import { PaginatedResult } from '../_models/pagination';
 import { Place } from '../_models/place';
+import { Reservation } from '../_models/reservation';
 import { User } from '../_models/user';
 
 // const httpOptions = {
@@ -177,5 +178,21 @@ export class UserService {
         return paginatedResult;
       })
       );
+  }
+
+  createReservation(userId: number, reservation: Reservation) {
+    return this.http.post(this.baseUrl + 'users/' + userId + '/reservations', reservation);
+  }
+
+  getReservationsForUser(userId: number) {
+    return this.http.get(this.baseUrl + 'users/' + userId + '/reservations');
+  }
+
+  getReservationsForPlace(userId: number, placeId: number) {
+    return this.http.get(this.baseUrl + 'users/' + userId + '/reservations/places/' + placeId);
+  }
+
+  deleteReservation(userId: number, id: number) {
+    return this.http.delete(this.baseUrl + 'users/' + userId + '/reservations/' + id);
   }
 }

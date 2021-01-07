@@ -27,10 +27,11 @@ export class PlaceEditComponent implements OnInit {
     private userService: UserService, private authService: AuthService) { }
 
   ngOnInit() {
-    // this.route.data.subscribe(data => {
-    //   this.place = data['place'];
-    // });
-    this.loadPlace();
+    this.route.data.subscribe(data => {
+      this.place = data['place'];
+    });
+    this.updateMainPhoto();
+    // this.loadPlace();
   }
 
   updatePlace() {

@@ -10,6 +10,7 @@ import { PlaceDetailComponent } from './places/place-detail/place-detail.compone
 import { PlaceEditComponent } from './places/place-edit/place-edit.component';
 import { PlacesListForUserComponent } from './places/places-list-for-user/places-list-for-user.component';
 import { PlacesListComponent } from './places/places-list/places-list.component';
+import { ReservationCreateComponent } from './reservations/reservation-create/reservation-create.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { ListsResolver } from './_resolvers/lists.resolver';
@@ -22,6 +23,7 @@ import { PlaceEditResolver } from './_resolvers/place-edit.resolver';
 import { PlacesCreateResolver } from './_resolvers/places-create.resolver';
 import { PlacesListForUserResolver } from './_resolvers/places-list-for-user.resolver';
 import { PlacesListResolver } from './_resolvers/places-list.resolver';
+import { ReservationCreateResolver } from './_resolvers/reservation-create.resolver';
 
 export const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -40,9 +42,10 @@ export const appRoutes: Routes = [
             { path: 'lists', component: ListsComponent, resolve: {users: ListsResolver}},
             { path: 'places/create', component: PlacesCreateComponent, resolve: {users: PlacesCreateResolver}},
             { path: 'places', component: PlacesListForUserComponent, resolve: {users: PlacesListForUserResolver}},
-            { path: 'places/edit/:id', component: PlaceEditComponent, resolve: {users: PlaceEditResolver}},
+            { path: 'places/edit/:id', component: PlaceEditComponent, resolve: {place: PlaceEditResolver}},
             { path: 'places/list', component: PlacesListComponent, resolve: {places: PlacesListResolver}},
-            { path: 'places/detail/:id', component: PlaceDetailComponent, resolve: {place: PlaceDetailResolver}}
+            { path: 'places/detail/:id', component: PlaceDetailComponent, resolve: {place: PlaceDetailResolver}},
+            { path: 'reserve/:id', component: ReservationCreateComponent, resolve: {place: ReservationCreateResolver}},
         ]
     },
     { path: '**', redirectTo: '', pathMatch: 'full' }

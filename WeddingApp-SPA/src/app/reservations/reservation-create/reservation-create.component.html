@@ -1,0 +1,31 @@
+<form [formGroup]="reservationForm" (ngSubmit)="reserve()">
+  <h2 class="text-center text-primary">Reserve your place</h2>
+  <hr>
+  <div class="container-sm">
+    <div class="form-group">
+      <input type="number" [ngClass]="{'is-invalid': reservationForm.get('amountOfGuests').errors 
+      && reservationForm.get('amountOfGuests').touched}" class="form-control" formControlName="amountOfGuests"
+        placeholder="Amount of guests">
+      <div class="invalid-feedback">Please insert proper amount of guests</div>
+    </div>
+
+    <div class="form-group">
+      <input [ngClass]="{'is-invalid': reservationForm.get('date').errors && reservationForm.get('date').touched}"
+        class="form-control" placeholder="Date of your party" formControlName="date" type="text" bsDatepicker
+        [bsConfig]="bsConfig">
+      <div class="invalid-feedback"
+        *ngIf="reservationForm.get('date').touched && reservationForm.get('date').hasError('required')">Date is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Comments" formControlName="comments">
+    </div>
+
+    <div class="form-group text-center">
+      <button class="btn btn-success mr-2" [disabled]="!reservationForm.valid" type="submit">Reserve</button>
+      <button class="btn btn-info" type="button" (click)="cancel()">Cancel</button>
+    </div>
+  </div>
+
+</form>

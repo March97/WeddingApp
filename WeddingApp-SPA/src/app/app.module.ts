@@ -51,6 +51,8 @@ import { PlacesListResolver } from './_resolvers/places-list.resolver';
 import { PlaceListCardComponent } from './places/place-list-card/place-list-card.component';
 import { PlaceDetailResolver } from './_resolvers/place-detail.resolver';
 import { PlaceDetailComponent } from './places/place-detail/place-detail.component';
+import { ReservationCreateComponent } from './reservations/reservation-create/reservation-create.component';
+import { ReservationCreateResolver } from './_resolvers/reservation-create.resolver';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -84,7 +86,8 @@ export function tokenGetter() {
       PlacePhotoEditorComponent,
       PlacesListComponent,
       PlaceListCardComponent,
-      PlaceDetailComponent
+      PlaceDetailComponent,
+      ReservationCreateComponent
    ],
   imports: [
     BrowserModule,
@@ -125,7 +128,8 @@ export function tokenGetter() {
     PlacesListForUserResolver,
     PlaceEditResolver,
     PlacesListResolver,
-    PlaceDetailResolver
+    PlaceDetailResolver,
+    ReservationCreateResolver
     // { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig }
   ],
   bootstrap: [AppComponent]

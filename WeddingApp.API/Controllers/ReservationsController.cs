@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -43,7 +44,11 @@ namespace WeddingApp.API.Controllers
             } else
             if (await _repoRes.CheckReservationByDate(resToCreate.Date, resToCreate.PlaceId)) {
                 return BadRequest($"Date {resToCreate.Date.Date} is already booked for this place.");
-            } else {
+            } else
+            if (resToCreate.Date.Date < DateTime.Now) {
+                return BadRequest("You have to choose minimum tomorrow date.");
+            }
+            else {
                 resToCreate.Cost = resToCreate.AmountOfGuests * place.Price;
                 _repoRes.Add(resToCreate);
 
