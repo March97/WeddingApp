@@ -13,5 +13,11 @@ namespace WeddingApp.API.Models
         public int AmountOfGuests { get; set; }
         public int Cost { get; set; }
         public string Comments { get; set; }
+        public bool Paid { get; set; }
+
+        public Reservation()
+        {
+            this.Paid = false;
+        }
     }
 }

@@ -55,6 +55,7 @@ import { ReservationCreateComponent } from './reservations/reservation-create/re
 import { ReservationCreateResolver } from './_resolvers/reservation-create.resolver';
 import { ReservationsListComponent } from './reservations/reservations-list/reservations-list.component';
 import { ReservationsListResolver } from './_resolvers/reservations-list.resolver';
+import { PaymentComponent } from './payment/payment.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -68,7 +69,7 @@ export function tokenGetter() {
 // }
 
 @NgModule({
-  declarations: [
+  declarations: [	
       AppComponent,
       NavComponent,
       HomeComponent,
@@ -90,7 +91,8 @@ export function tokenGetter() {
       PlaceListCardComponent,
       PlaceDetailComponent,
       ReservationCreateComponent,
-      ReservationsListComponent
+      ReservationsListComponent,
+      PaymentComponent
    ],
   imports: [
     BrowserModule,

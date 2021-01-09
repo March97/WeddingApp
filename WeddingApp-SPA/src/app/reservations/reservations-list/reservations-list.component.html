@@ -16,6 +16,7 @@
         <th style="width: 10%">Amount of guests</th>
         <th style="width: 10%">Cost</th>
         <th style="width: 35%">Comments</th>
+        <th style="width: 5%">Paid</th>
         <th style="width: 10%"></th>
       </tr>
       <tr *ngFor="let reservation of reservations">
@@ -25,9 +26,11 @@
         <td>{{reservation.amountOfGuests}}</td>
         <td>{{reservation.cost}}</td>
         <td>{{reservation.comments}}</td>
+        <td *ngIf="reservation.paid">Yes</td>
+        <td *ngIf="!reservation.paid">No</td>
         <td>
           <button class="btn btn-danger" (click)="deleteReservation(reservation.id)">Delete</button>
-        </td>
+          <button class="btn btn-success mt-2" [disabled]="reservation.paid" (click)="pay(reservation)">Pay</button>
       </tr>
     </table>
   </div>

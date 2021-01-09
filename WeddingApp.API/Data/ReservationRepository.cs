@@ -57,5 +57,11 @@ namespace WeddingApp.API.Data
             return await _context.SaveChangesAsync() > 0;
         }
 
+        public async Task PayReservation(int id) {
+
+            var reservation = await _context.Reservations.FirstOrDefaultAsync(r => r.Id == id);
+            reservation.Paid = true;
+        }
+
     }
 }

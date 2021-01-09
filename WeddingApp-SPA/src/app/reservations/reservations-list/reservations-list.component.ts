@@ -6,6 +6,9 @@ import { User } from 'src/app/_models/user';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { AuthService } from 'src/app/_services/auth.service';
 import { UserService } from 'src/app/_services/user.service';
+import { loadStripe } from "@stripe/stripe-js";
+import { HttpClient } from '@angular/common/http';
+import { analyzeAndValidateNgModules } from '@angular/compiler';
 
 @Component({
   selector: 'app-reservations-list',
@@ -14,9 +17,12 @@ import { UserService } from 'src/app/_services/user.service';
 })
 export class ReservationsListComponent implements OnInit {
   reservations: Reservation[];
+  response: any;
   reservationsContainer: 'Your reservations';
-  constructor(private userService: UserService, private authService: AuthService, 
-    private alertify: AlertifyService, private route: ActivatedRoute) {}
+  stripePromise = loadStripe("pk_test_51I7gdcKhTDjEMF3pCbMSERK9k0VlKifvGUiMYperqvOJycUcktKU21r1ogbLuXnl4lxlP3AHR5xQ2DQSjt6lxCp800k2868kLH");
+  id: any;
+  constructor(private userService: UserService, private authService: AuthService,
+    private alertify: AlertifyService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
@@ -24,6 +30,12 @@ export class ReservationsListComponent implements OnInit {
       console.log('this.reservations', this.reservations);
     });
     this.loadAdditional();
+    // this.route.queryParams.subscribe(params => {
+    //   this.id = params['id'];
+    //   console.log(this.id);
+    // }, error => {}, 
+
+    
   }
 
   loadAdditional() {
@@ -55,4 +67,35 @@ export class ReservationsListComponent implements OnInit {
     });
   }
 
+  async pay(res: Reservation) {
+    console.log('pay');
+    const stripe = await this.stripePromise;
+    // const response = await this.http.post("http://localhost:5000/create-checkout-session", res);
+
+    this.userService.payment(res).subscribe((response) => {
+      this.response = response;
+      const session = this.response;
+      stripe.redirectToCheckout({
+        sessionId: session.id,
+      });
+    });
+  }
+
+  loadReservations() {
+    this.route.data.subscribe(data => {
+      this.reservations = data['reservations'];
+      console.log('this.reservations', this.reservations);
+    });
+    this.loadAdditional();
+  
+  }
+
+  paymentComplete() {
+    this.userService.pay(this.authService.decodedToken.nameid, this.id).subscribe(() => {
+      this.alertify.success('Payment complete');
+      this.route['reservations'];
+    }, error => {
+      this.alertify.error(error);
+    }, () => {this.loadReservations();});
+  }
 }

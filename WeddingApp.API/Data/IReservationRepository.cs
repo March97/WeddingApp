@@ -14,5 +14,6 @@ namespace WeddingApp.API.Data
         Task<IEnumerable<Reservation>> GetReservationsForPlace(int id);
         Task<bool> CheckReservationByDate(DateTime date, int placeId);
         Task<bool> SaveAll();
+        Task PayReservation(int id);
     }
 }

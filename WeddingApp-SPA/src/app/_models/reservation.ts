@@ -9,4 +9,5 @@ export interface Reservation {
     comments: string;
     placeName?: string;
     userName?: string;
+    paid?: boolean;
 }

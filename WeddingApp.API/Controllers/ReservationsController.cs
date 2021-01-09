@@ -110,5 +110,16 @@ namespace WeddingApp.API.Controllers
 
             return BadRequest($"Failed to delete the reservation id: {id}");
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PayReservation(int id) 
+        {
+            await _repoRes.PayReservation(id);
+
+            if (await _repoRes.SaveAll())
+                return Ok();
+
+            return BadRequest($"Failed to paid the reservation id: {id}");
+        }
     }
 }

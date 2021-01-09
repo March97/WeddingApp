@@ -195,4 +195,12 @@ export class UserService {
   deleteReservation(userId: number, id: number) {
     return this.http.delete(this.baseUrl + 'users/' + userId + '/reservations/' + id);
   }
+
+  payment(reservation: Reservation) {
+    return this.http.post("http://localhost:5000/create-checkout-session", reservation);
+  }
+
+  pay(userId: number, id: number) {
+    return this.http.put(this.baseUrl + 'users/' + userId + '/reservations/' + id, null);
+  }
 }

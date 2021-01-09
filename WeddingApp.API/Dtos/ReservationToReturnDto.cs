@@ -11,5 +11,6 @@ namespace WeddingApp.API.Dtos
         public int AmountOfGuests { get; set; }
         public int Cost { get; set; }
         public string Comments { get; set; }
+        public bool Paid { get; set; }
     }
 }

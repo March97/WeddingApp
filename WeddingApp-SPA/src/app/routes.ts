@@ -5,6 +5,7 @@ import { MemberDetailComponent } from './members/member-detail/member-detail.com
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { MemberListComponent } from './members/member-list/member-list.component';
 import { MessagesComponent } from './messages/messages.component';
+import { PaymentComponent } from './payment/payment.component';
 import { PlacesCreateComponent } from './places/place-create/place-create.component';
 import { PlaceDetailComponent } from './places/place-detail/place-detail.component';
 import { PlaceEditComponent } from './places/place-edit/place-edit.component';
@@ -49,6 +50,7 @@ export const appRoutes: Routes = [
             { path: 'places/detail/:id', component: PlaceDetailComponent, resolve: {place: PlaceDetailResolver}},
             { path: 'reserve/:id', component: ReservationCreateComponent, resolve: {place: ReservationCreateResolver}},
             { path: 'reservations', component: ReservationsListComponent, resolve: {reservations: ReservationsListResolver}},
+            { path: 'payment', component: PaymentComponent}
         ]
     },
     { path: '**', redirectTo: '', pathMatch: 'full' }

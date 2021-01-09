@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using WeddingApp.API.Helpers;
 using AutoMapper;
+using Stripe;
 
 namespace WeddingApp.API
 {
@@ -63,6 +64,7 @@ namespace WeddingApp.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            StripeConfiguration.ApiKey = "sk_test_51I7gdcKhTDjEMF3pO9H5CkzpCmR32lRTXrsjwZmfy2TyxqYwj9uuNuKvLTmxlYkBvNe5fGLrDmvVy8TgOLDnNNuf00iCI3Btqj";
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
