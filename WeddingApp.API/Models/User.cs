@@ -15,6 +15,8 @@ namespace WeddingApp.API.Models
 
         public string Gender { get; set; }
 
+        public string Profession { get; set; }
+
         public DateTime DateOfBirth { get; set; }
 
         public string KnownAs { get; set; }
@@ -24,10 +26,6 @@ namespace WeddingApp.API.Models
         public DateTime LastActive { get; set; }
 
         public string Introduction { get; set; }
-
-        public string LookingFor { get; set; }
-
-        public string Interests { get; set; }
 
         public string City { get; set; }
 

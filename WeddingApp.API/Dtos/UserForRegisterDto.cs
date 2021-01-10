@@ -14,6 +14,8 @@ namespace WeddingApp.API.Dtos
         [Required]
         public string Gender { get; set; }
         [Required]
+        public string Profession { get; set; }
+        [Required]
         public string KnownAs { get; set; }
         [Required]
         public DateTime DateOfBirth { get; set; }

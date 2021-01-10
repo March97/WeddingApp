@@ -17,13 +17,12 @@ namespace WeddingApp.API.Migrations
                     PasswordHash = table.Column<byte[]>(nullable: true),
                     PasswordSalt = table.Column<byte[]>(nullable: true),
                     Gender = table.Column<string>(nullable: true),
+                    Profession = table.Column<string>(nullable: true),
                     DateOfBirth = table.Column<DateTime>(nullable: false),
                     KnownAs = table.Column<string>(nullable: true),
                     Created = table.Column<DateTime>(nullable: false),
                     LastActive = table.Column<DateTime>(nullable: false),
                     Introduction = table.Column<string>(nullable: true),
-                    LookingFor = table.Column<string>(nullable: true),
-                    Interests = table.Column<string>(nullable: true),
                     City = table.Column<string>(nullable: true),
                     Country = table.Column<string>(nullable: true)
                 },
@@ -190,7 +189,8 @@ namespace WeddingApp.API.Migrations
                     Date = table.Column<DateTime>(nullable: false),
                     AmountOfGuests = table.Column<int>(nullable: false),
                     Cost = table.Column<int>(nullable: false),
-                    Comments = table.Column<string>(nullable: true)
+                    Comments = table.Column<string>(nullable: true),
+                    Paid = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

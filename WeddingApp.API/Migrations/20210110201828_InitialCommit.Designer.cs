@@ -9,7 +9,7 @@ using WeddingApp.API.Data;
 namespace WeddingApp.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20201226230509_InitialCommit")]
+    [Migration("20210110201828_InitialCommit")]
     partial class InitialCommit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -201,6 +201,9 @@ namespace WeddingApp.API.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("Paid")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("PlaceId")
                         .HasColumnType("INTEGER");
 
@@ -237,9 +240,6 @@ namespace WeddingApp.API.Migrations
                     b.Property<string>("Gender")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Interests")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Introduction")
                         .HasColumnType("TEXT");
 
@@ -249,14 +249,14 @@ namespace WeddingApp.API.Migrations
                     b.Property<DateTime>("LastActive")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("LookingFor")
-                        .HasColumnType("TEXT");
-
                     b.Property<byte[]>("PasswordHash")
                         .HasColumnType("BLOB");
 
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("BLOB");
+
+                    b.Property<string>("Profession")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Username")
                         .HasColumnType("TEXT");

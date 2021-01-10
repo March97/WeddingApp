@@ -16,6 +16,11 @@ export class RegisterComponent implements OnInit {
   user: User;
   registerForm: FormGroup;
   bsConfig: Partial<BsDatepickerConfig>;
+  professionsList = [{value: 'Hairdresser', display: 'Hairdresser'}, {value: 'Make-up', display: 'Make-up'}, 
+    {value: 'Stylist', display: 'Stylist'}, {value: 'Tailor', display: 'Tailor'}, {value: 'Musician', display: 'Musician'},
+    {value: 'Chauffeur', display: 'Chauffeur'}, {value: 'Entertainer', display: 'Entertainer'}, 
+    {value: 'Fireworks', display: 'Fireworks'}, {value: 'Barman', display: 'Barman'}, {value: 'User', display: 'User'}];
+  
 
   constructor(private authService: AuthService, private alertify: AlertifyService,
     private fb: FormBuilder, private router: Router) { }
@@ -32,6 +37,7 @@ export class RegisterComponent implements OnInit {
       gender: ['male'],
       username: ['', Validators.required],
       knownAs: ['', Validators.required],
+      profession: ['', Validators.required],
       dateOfBirth: [null, Validators.required],
       city: ['', Validators.required],
       country: ['', Validators.required],

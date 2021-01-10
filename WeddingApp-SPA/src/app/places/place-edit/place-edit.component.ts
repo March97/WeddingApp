@@ -32,9 +32,10 @@ export class PlaceEditComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe(data => {
       this.place = data['place'];
+      this.loadReservations();
     });
     this.updateMainPhoto();
-    this.loadReservations();
+    
     // this.loadPlace();
   }
 
