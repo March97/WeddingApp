@@ -9,7 +9,7 @@
       <h3>Your reservations</h3>
       <button class="btn btn-success ml-5" [routerLink]="['/microsoft']">Add to Microsoft Graph</button>
     </div>
-    <table class="table table-hover" style="cursor: pointer">
+    <table class="table table-hover mt-3" style="cursor: pointer">
       <tr>
         <th style="width: 10%">Place</th>
         <th style="width: 10%">Reserved by</th>
@@ -30,8 +30,8 @@
         <td *ngIf="reservation.paid">Yes</td>
         <td *ngIf="!reservation.paid">No</td>
         <td>
-          <button class="btn btn-danger" (click)="deleteReservation(reservation.id)">Delete</button>
-          <button class="btn btn-success mt-2" [disabled]="reservation.paid" (click)="pay(reservation)">Pay</button>
+          <button class="btn btn-danger" (click)="deleteReservation(reservation.id)" style="width: 100px">Delete</button>
+          <button class="btn btn-success mt-2" [disabled]="reservation.paid" (click)="pay(reservation)" style="width: 100px">Pay</button>
       </tr>
     </table>
   </div>

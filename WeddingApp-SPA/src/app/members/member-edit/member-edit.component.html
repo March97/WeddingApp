@@ -15,6 +15,10 @@
         <img class="card-img-top img-thumbnail" src="{{photoUrl || '../../assets/user.png'}}" alt="{{user.knownAs}}">
         <div class="card-body">
           <div>
+            <strong>Profession:</strong>
+            <p>{{user.profession}}</p>
+          </div>
+          <div>
             <strong>Location:</strong>
             <p>{{user.city}}, {{user.country}}</p>
           </div>
@@ -44,10 +48,6 @@
             <form #editForm="ngForm" id="editForm" (ngSubmit)="updateUser()">
               <h4>Description</h4>
               <textarea name="introduction" rows="6" class="form-control" [(ngModel)]="user.introduction"></textarea>
-              <h4>Looking For</h4>
-              <textarea name="lookingFor" rows="6" class="form-control" [(ngModel)]="user.lookingFor"></textarea>
-              <h4>Interests</h4>
-              <textarea name="interests" rows="6" class="form-control" [(ngModel)]="user.interests"></textarea>
               <h4>Location Details</h4>
               <div class="form-inline">
                 <label for="city">City</label>

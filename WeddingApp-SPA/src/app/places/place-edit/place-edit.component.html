@@ -82,14 +82,15 @@
               </div>
             
               <div class="row" *ngIf="reservations.length > 0">
-                <div class="row"><h5>Reservations for {{place.name}}</h5></div>
+                <div class="row ml-2"><h5>Reservations for {{place.name}}</h5></div>
                 <table class="table table-hover" style="cursor: pointer">
                   <tr>
                     <th style="width: 15%">Reserved by</th>
                     <th style="width: 15%">Date</th>
                     <th style="width: 15%">Amount of guests</th>
                     <th style="width: 15%">Cost</th>
-                    <th style="width: 30%">Comments</th>
+                    <th style="width: 25%">Comments</th>
+                    <th style="width: 5%">Paid</th>
                     <th style="width: 10%"></th>
                   </tr>
                   <tr *ngFor="let reservation of reservations">
@@ -98,6 +99,8 @@
                     <td>{{reservation.amountOfGuests}}</td>
                     <td>{{reservation.cost}}</td>
                     <td>{{reservation.comments}}</td>
+                    <td *ngIf="reservation.paid">Yes</td>
+                    <td *ngIf="!reservation.paid">No</td>
                     <td>
                       <button class="btn btn-danger" (click)="deleteReservation(reservation.id)">Delete</button>
                     </td>

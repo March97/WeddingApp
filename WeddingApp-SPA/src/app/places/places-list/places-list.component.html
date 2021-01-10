@@ -5,43 +5,45 @@
 <div class="container mt-3">
 
   <form class="form-inline" #form="ngForm" (ngSubmit)="loadPlaces()" novalidate>
-    <div class="form-group">
-      <label for="minPrice">Price From</label>
-      <input type="number" class="form-control ml-1" style="width: 70px" id="minPrice"
-        [(ngModel)]="placeParams.minPrice" name="minPrice">
-    </div>
+      <div class="form-group">
+        <label for="minPrice">Price From</label>
+        <input type="number" class="form-control ml-1" style="width: 100px" id="minPrice"
+          [(ngModel)]="placeParams.minPrice" name="minPrice">
+      </div>
+    
+      <div class="form-group px-2">
+        <label for="maxPrice">Price To</label>
+        <input type="number" class="form-control ml-1" style="width: 100px" id="maxPrice"
+          [(ngModel)]="placeParams.maxPrice" name="maxPrice">
+      </div>
   
-    <div class="form-group px-2">
-      <label for="maxPrice">Price To</label>
-      <input type="number" class="form-control ml-1" style="width: 70px" id="maxPrice"
-        [(ngModel)]="placeParams.maxPrice" name="maxPrice">
-    </div>
-
-    <div class="form-group">
-      <label for="minCapacity">Capacity From</label>
-      <input type="number" class="form-control ml-1" style="width: 70px" id="minCapacity"
-        [(ngModel)]="placeParams.minCapacity" name="minCapacity">
-    </div>
-  
-    <div class="form-group px-2">
-      <label for="maxCapacity">Capacity To</label>
-      <input type="number" class="form-control ml-1" style="width: 70px" id="maxCapacity"
-        [(ngModel)]="placeParams.maxCapacity" name="maxCapacity">
-    </div>
-  
-    <div class="form-group px-2">
-      <label for="city">City: </label>
-      <select class="form-control ml-1" style="width: 130px" id="city"
-      [(ngModel)]="placeParams.city" name="city">
-        <option *ngFor="let city of cityList" [value]="city.value">
-          {{city.display}}
-        </option>
-      </select>
-    </div>
-    <button type="submit" class="btn btn-primary" style="margin-left:10px">Apply Filters</button>
-    <button type="button" class="btn btn-info" (click)="resetFilters()" style="margin-left:10px">Reset Filter</button>
+      <div class="form-group">
+        <label for="minCapacity">Capacity From</label>
+        <input type="number" class="form-control ml-1" style="width: 100px" id="minCapacity"
+          [(ngModel)]="placeParams.minCapacity" name="minCapacity">
+      </div>
+    
+      <div class="form-group px-2">
+        <label for="maxCapacity">Capacity To</label>
+        <input type="number" class="form-control ml-1" style="width: 100px" id="maxCapacity"
+          [(ngModel)]="placeParams.maxCapacity" name="maxCapacity">
+      </div>
+    
+      <div class="form-group px-2">
+        <label for="city">City: </label>
+        <select class="form-control ml-1" style="width: 130px" id="city"
+        [(ngModel)]="placeParams.city" name="city">
+          <option *ngFor="let city of cityList" [value]="city.value">
+            {{city.display}}
+          </option>
+        </select>
+      </div>
   
     <div class="col">
+      <div class="btn-group float-left mt-3">
+        <button type="submit" class="btn btn-primary">Apply Filters</button>
+        <button type="button" class="btn btn-info" (click)="resetFilters()">Reset Filter</button>
+      </div>
       <div class="btn-group float-right mt-3">
         <button type="button" name="orderBy" class="btn btn-primary" 
           [(ngModel)]="placeParams.orderBy" (click)="loadPlaces()" btnRadio="created">Newest Places</button>
