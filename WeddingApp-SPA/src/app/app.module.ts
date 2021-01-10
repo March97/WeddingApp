@@ -56,6 +56,11 @@ import { ReservationCreateResolver } from './_resolvers/reservation-create.resol
 import { ReservationsListComponent } from './reservations/reservations-list/reservations-list.component';
 import { ReservationsListResolver } from './_resolvers/reservations-list.resolver';
 import { PaymentComponent } from './payment/payment.component';
+import { LoginmicrosoftComponent } from './loginmicrosoft/loginmicrosoft.component';
+import { MsalModule } from '@azure/msal-angular';
+import { OAuthSettings } from './oauth';
+import { CalendarComponent } from './calendar/calendar.component';
+import { CalendarResolver } from './_resolvers/calendar.resolver';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -69,7 +74,7 @@ export function tokenGetter() {
 // }
 
 @NgModule({
-  declarations: [	
+  declarations: [			
       AppComponent,
       NavComponent,
       HomeComponent,
@@ -92,7 +97,9 @@ export function tokenGetter() {
       PlaceDetailComponent,
       ReservationCreateComponent,
       ReservationsListComponent,
-      PaymentComponent
+      PaymentComponent,
+      LoginmicrosoftComponent,
+      CalendarComponent
    ],
   imports: [
     BrowserModule,
@@ -115,6 +122,12 @@ export function tokenGetter() {
         allowedDomains: ['localhost:5000'],
         disallowedRoutes: ['localhost:5000/api/auth']
       }
+    }),
+    MsalModule.forRoot({
+      auth: {
+        clientId: OAuthSettings.appId,
+        redirectUri: OAuthSettings.redirectUri
+      }
     })
   ],
   providers: [
@@ -135,7 +148,8 @@ export function tokenGetter() {
     PlacesListResolver,
     PlaceDetailResolver,
     ReservationCreateResolver,
-    ReservationsListResolver
+    ReservationsListResolver,
+    CalendarResolver
     // { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig }
   ],
   bootstrap: [AppComponent]

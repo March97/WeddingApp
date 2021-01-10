@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
+import { CalendarComponent } from './calendar/calendar.component';
 import { HomeComponent } from './home/home.component';
 import { ListsComponent } from './lists/lists.component';
+import { LoginmicrosoftComponent } from './loginmicrosoft/loginmicrosoft.component';
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { MemberListComponent } from './members/member-list/member-list.component';
@@ -15,6 +17,7 @@ import { ReservationCreateComponent } from './reservations/reservation-create/re
 import { ReservationsListComponent } from './reservations/reservations-list/reservations-list.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
+import { CalendarResolver } from './_resolvers/calendar.resolver';
 import { ListsResolver } from './_resolvers/lists.resolver';
 import { MemberDetailResolver } from './_resolvers/member-detail.resolver';
 import { MemberEditResolver } from './_resolvers/member-edit.resolver';
@@ -50,7 +53,9 @@ export const appRoutes: Routes = [
             { path: 'places/detail/:id', component: PlaceDetailComponent, resolve: {place: PlaceDetailResolver}},
             { path: 'reserve/:id', component: ReservationCreateComponent, resolve: {place: ReservationCreateResolver}},
             { path: 'reservations', component: ReservationsListComponent, resolve: {reservations: ReservationsListResolver}},
-            { path: 'payment', component: PaymentComponent}
+            { path: 'payment', component: PaymentComponent},
+            { path: 'microsoft', component: LoginmicrosoftComponent},
+            { path: 'calendar', component: CalendarComponent, resolve: {reservations: CalendarResolver} }
         ]
     },
     { path: '**', redirectTo: '', pathMatch: 'full' }
