@@ -59,7 +59,7 @@ namespace WeddingApp.API.Data
 
             users = users.Where(u => u.Id != userParams.UserId);
 
-            users = users.Where(u => u.Gender == userParams.Gender);
+            users = users.Where(u => u.Profession == userParams.Profession);
 
             if (userParams.Likers)
             {
@@ -73,13 +73,13 @@ namespace WeddingApp.API.Data
                 users = users.Where(u => userLikees.Contains(u.Id));
             }
 
-            if (userParams.MinAge != 18 || userParams.MaxAge != 99)
-            {
-                var minDob = DateTime.Today.AddYears(-userParams.MaxAge - 1);
-                var maxDob = DateTime.Today.AddYears(-userParams.MinAge);
+            // if (userParams.MinAge != 18 || userParams.MaxAge != 99)
+            // {
+            //     var minDob = DateTime.Today.AddYears(-userParams.MaxAge - 1);
+            //     var maxDob = DateTime.Today.AddYears(-userParams.MinAge);
 
-                users = users.Where( u => u.DateOfBirth >= minDob && u.DateOfBirth <= maxDob);
-            }
+            //     users = users.Where( u => u.DateOfBirth >= minDob && u.DateOfBirth <= maxDob);
+            // }
 
             if (!string.IsNullOrEmpty(userParams.OrderBy))
             {

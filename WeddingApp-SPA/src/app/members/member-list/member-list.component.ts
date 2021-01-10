@@ -14,6 +14,10 @@ export class MemberListComponent implements OnInit {
   users: User[];
   user: User = JSON.parse(localStorage.getItem('user'));
   genderList = [{value: 'male', display: 'Males'}, {value: 'female', display: 'Females'}];
+  professionsList = [{value: 'Hairdresser', display: 'Hairdresser'}, {value: 'Make-up', display: 'Make-up'}, 
+  {value: 'Stylist', display: 'Stylist'}, {value: 'Tailor', display: 'Tailor'}, {value: 'Musician', display: 'Musician'},
+  {value: 'Chauffeur', display: 'Chauffeur'}, {value: 'Entertainer', display: 'Entertainer'}, 
+  {value: 'Fireworks', display: 'Fireworks'}, {value: 'Barman', display: 'Barman'}, {value: 'User', display: 'User'}];
   userParams: any = {};
   pagination: Pagination;
 
@@ -26,9 +30,10 @@ export class MemberListComponent implements OnInit {
       this.pagination = data['users'].pagination;
     });
 
-    this.userParams.gender = this.user.geneder === 'female' ? 'male' : 'male';
-    this.userParams.minAge = 18;
-    this.userParams.maxAge = 99;
+    this.userParams.profession = 'User';
+    //this.userParams.gender = this.user.geneder === 'female' ? 'male' : 'male';
+    // this.userParams.minAge = 18;
+    // this.userParams.maxAge = 99;
     this.userParams.orderBy = 'lastActive';
   }
 
@@ -38,9 +43,10 @@ export class MemberListComponent implements OnInit {
   }
 
   resetFilters(){
-    this.userParams.gender = this.user.geneder === 'female' ? 'male' : 'male';
-    this.userParams.minAge = 18;
-    this.userParams.maxAge = 99;
+    //this.userParams.gender = this.user.geneder === 'female' ? 'male' : 'male';
+    this.userParams.profession = 'User';
+    // this.userParams.minAge = 18;
+    // this.userParams.maxAge = 99;
     this.loadUsers();
   }
 

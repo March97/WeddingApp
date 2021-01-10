@@ -4,7 +4,7 @@ namespace WeddingApp.API.Helpers
     {
         private const int MaxPageSize = 50;
         public int PageNumber { get; set; } = 1;
-        private int pageSize = 10;
+        private int pageSize = 6;
         public int PageSize
         {
             get { return pageSize; }
@@ -13,11 +13,11 @@ namespace WeddingApp.API.Helpers
 
         public int UserId { get; set; }
 
-        public string Gender { get; set; }
+        public string Profession { get; set; }
 
-        public int MinAge { get; set; } = 18;
+        // public int MinAge { get; set; } = 18;
 
-        public int MaxAge { get; set; } = 99;
+        // public int MaxAge { get; set; } = 99;
         
         public string OrderBy { get; set; }
 
