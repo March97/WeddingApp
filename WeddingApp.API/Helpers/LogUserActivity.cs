@@ -15,7 +15,7 @@ namespace WeddingApp.API.Helpers
 
             var userId = int.Parse(resultContext.HttpContext.User
                 .FindFirst(ClaimTypes.NameIdentifier).Value);
-            var repo = resultContext.HttpContext.RequestServices.GetService<IDatingRepository>();
+            var repo = resultContext.HttpContext.RequestServices.GetService<IUserRepository>();
             var user = await repo.GetUser(userId);
             user.LastActive = DateTime.Now;
             await repo.SaveAll();

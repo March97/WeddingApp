@@ -5,7 +5,7 @@ using WeddingApp.API.Models;
 
 namespace WeddingApp.API.Data
 {
-    public interface IDatingRepository
+    public interface IUserRepository
     {
          void Add<T>(T entity) where T: class;
          void Delete<T>(T entity)  where T: class;

@@ -18,9 +18,9 @@ namespace WeddingApp.API.Controllers
     public class PlacesController : ControllerBase
     {
         private readonly IPlaceRepository _repo;
-        private readonly IDatingRepository _repoDating;
+        private readonly IUserRepository _repoDating;
         private readonly IMapper _mapper;
-        public PlacesController(IPlaceRepository repo, IDatingRepository repoDating, IMapper mapper)
+        public PlacesController(IPlaceRepository repo, IUserRepository repoDating, IMapper mapper)
         {
             _mapper = mapper;
             _repo = repo;

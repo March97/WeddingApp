@@ -18,11 +18,11 @@ namespace WeddingApp.API.Controllers
     public class ReservationsController : ControllerBase
     {
         private readonly IReservationRepository _repoRes;
-        private readonly IDatingRepository _repoDating;
+        private readonly IUserRepository _repoDating;
         private readonly IPlaceRepository _repoPlace;
         private readonly IMapper _mapper;
 
-        public ReservationsController(IReservationRepository repoRes, IDatingRepository repoDating, IPlaceRepository repoPlace, IMapper mapper)
+        public ReservationsController(IReservationRepository repoRes, IUserRepository repoDating, IPlaceRepository repoPlace, IMapper mapper)
         {
             _repoDating = repoDating;
             _repoRes = repoRes;
