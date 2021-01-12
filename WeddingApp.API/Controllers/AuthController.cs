@@ -11,6 +11,7 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
+using WeddingApp.API.Services;
 
 namespace WeddingApp.API.Controllers
 {
@@ -20,71 +21,39 @@ namespace WeddingApp.API.Controllers
 
     public class AuthController : ControllerBase
     {
-        private readonly IAuthRepository _repo;
-        private readonly IConfiguration _config;
-        private readonly IMapper _mapper;
-        public AuthController(IAuthRepository repo, IConfiguration config, IMapper mapper)
+        private readonly IAuthService _service;
+        public AuthController(IAuthService service)
         {
-            _mapper = mapper;
-            _config = config;
-            _repo = repo;
+            _service = service;
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
-            // //validate request
-            // if (!ModelState.IsValid)
-            //     return BadRequest(ModelState);
+            UserForDetailedDto user = await _service.Register(userForRegisterDto);
 
-            userForRegisterDto.Username = userForRegisterDto.Username.ToLower();
-
-            if (await _repo.UserExists(userForRegisterDto.Username))
+            if(user != null) 
+                return CreatedAtRoute("GetUser", new {controller = "Users", id = user.Id}, user);
+            else
                 return BadRequest("Username already exists");
-
-            var userToCreate = _mapper.Map<User>(userForRegisterDto);
-
-            var createdUser = await _repo.Register(userToCreate, userForRegisterDto.Password);
-
-            var userToReturn = _mapper.Map<UserForDetailedDto>(createdUser);
-
-            return CreatedAtRoute("GetUser", new {controller = "Users", id = createdUser.Id}, userToReturn);
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
         {
-            var userFromRepo = await _repo.Login(userForLoginDto.Username.ToLower(), userForLoginDto.Password);
+            Tuple<UserForListDto, string> toReturn;
+            try {
+                toReturn = await _service.Login(userForLoginDto);
+            } catch (Exception e) {
+                return BadRequest(e);
+            }
 
-            if (userFromRepo == null)
-                return Unauthorized();
-
-            var claims = new[]
-            {
-                    new Claim(ClaimTypes.NameIdentifier, userFromRepo.Id.ToString()),
-                    new Claim(ClaimTypes.Name, userFromRepo.Username)
-            };
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
-
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddDays(1),
-                SigningCredentials = creds
-            };
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-
-            var user = _mapper.Map<UserForListDto>(userFromRepo);
+            var user = toReturn.Item1;
+            var token = toReturn.Item2;
 
             return Ok(new
             {
-                token = tokenHandler.WriteToken(token),
+                token,
                 user
             });
         }

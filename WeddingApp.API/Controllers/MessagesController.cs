@@ -1,14 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using AutoMapper;
-using WeddingApp.API.Data;
 using WeddingApp.API.Dtos;
 using WeddingApp.API.Helpers;
-using WeddingApp.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WeddingApp.API.Services;
 
 namespace WeddingApp.API.Controllers
 {
@@ -18,13 +15,13 @@ namespace WeddingApp.API.Controllers
     [ApiController]
     public class MessagesController : ControllerBase
     {
-        private readonly IUserRepository _repo;
-        private readonly IMapper _mapper;
+        // private readonly IUserRepository _repo;
+        // private readonly IMapper _mapper;
+        private readonly IMessagesService _service;
 
-        public MessagesController(IUserRepository repo, IMapper mapper)
+        public MessagesController(IMessagesService service)
         {
-            _mapper = mapper;
-            _repo = repo;
+            _service = service;
         }
 
         [HttpGet("{id}", Name = "GetMessage")]
@@ -33,7 +30,7 @@ namespace WeddingApp.API.Controllers
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var messageFromRepo = await _repo.GetMessage(id);
+            var messageFromRepo = await _service.GetMessage(id);
 
             if (messageFromRepo == null)
                 return NotFound();
@@ -47,14 +44,11 @@ namespace WeddingApp.API.Controllers
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            messageParams.UserId = userId;
+            var t = await _service.GetMessagesForUser(userId, messageParams);
+            var messages = t.Item2;
 
-            var messagesFromRepo = await _repo.GetMessagesForUser(messageParams);
-
-            var messages = _mapper.Map<IEnumerable<MessageToReturnDto>>(messagesFromRepo);
-
-            Response.AddPagination(messagesFromRepo.CurrentPage, messagesFromRepo.PageSize, 
-                messagesFromRepo.TotalCount, messagesFromRepo.TotalPages);
+            Response.AddPagination(t.Item1.CurrentPage, t.Item1.PageSize, 
+                t.Item1.TotalCount, t.Item1.TotalPages);
 
             return Ok(messages);
         }
@@ -65,10 +59,8 @@ namespace WeddingApp.API.Controllers
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var messageFromRepo = await _repo.GetMessageThread(userId, recipientId);
-
-            var messageThread = _mapper.Map<IEnumerable<MessageToReturnDto>>(messageFromRepo);
-
+            var messageThread = await _service.GetMessageThread(userId, recipientId);
+            
             return Ok(messageThread);
         }
 
@@ -76,31 +68,19 @@ namespace WeddingApp.API.Controllers
         public async Task<IActionResult> CreateMessage(int userId, 
             MessageForCreationDto messageForCreationDto)
         {
-            var sender = await _repo.GetUser(userId);
-
-            if (sender.Id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            messageForCreationDto.SenderId = userId;
+            MessageToReturnDto messageToReturn;
 
-            var recipient = await _repo.GetUser(messageForCreationDto.RecipientId);
-
-            if (recipient == null)
-                return BadRequest("Could not find user");
-
-            var message = _mapper.Map<Message>(messageForCreationDto);
-
-            _repo.Add(message);
-
-            if (await _repo.SaveAll())
-            {
-                //var messageToReturn = _mapper.Map<MessageForCreationDto>(message);
-                var messageToReturn = _mapper.Map<MessageToReturnDto>(message);
-                    return CreatedAtRoute("GetMessage", 
-                        new {userId, id = message.Id}, messageToReturn);
+            try {
+                messageToReturn = await _service.CreateMessage(userId, messageForCreationDto);
+            } catch (Exception e) {
+                return BadRequest(e);
             }
 
-            throw new System.Exception("Creating the message field on save");
+            return CreatedAtRoute("GetMessage", 
+                        new {userId, id = messageToReturn.Id}, messageToReturn);
         }
 
         [HttpPost("{id}")]
@@ -109,21 +89,13 @@ namespace WeddingApp.API.Controllers
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var messageFromRepo = await _repo.GetMessage(id);
+            try {
+                var a = await _service.DeleteMessage(id, userId);
+            } catch (Exception e) {
+                return BadRequest(e);
+            }
 
-            if (messageFromRepo.SenderId == userId)
-                messageFromRepo.SenderDeleted = true;
-
-            if (messageFromRepo.RecipientId == userId)
-                messageFromRepo.RecipientDeleted = true;
-
-            if (messageFromRepo.SenderDeleted && messageFromRepo.RecipientDeleted)
-                _repo.Delete(messageFromRepo);
-
-            if (await _repo.SaveAll())
-                return NoContent();
-
-            throw new System.Exception("Error deleted message");
+            return NoContent();
         }
 
         [HttpPost("{id}/read")]
@@ -132,15 +104,11 @@ namespace WeddingApp.API.Controllers
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var message = await _repo.GetMessage(id);
-
-            if (message.RecipientId != userId)
-                return Unauthorized();
-
-            message.IsRead = true;
-            message.DateRead = DateTime.Now;
-
-            await _repo.SaveAll();
+            try {
+                var a = await _service.MarkMessageAsRead(userId, id);
+            } catch (Exception e) {
+                return BadRequest(e);
+            }
 
             return NoContent();
         }

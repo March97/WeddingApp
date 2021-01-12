@@ -59,7 +59,8 @@ namespace WeddingApp.API.Data
 
             users = users.Where(u => u.Id != userParams.UserId);
 
-            users = users.Where(u => u.Profession == userParams.Profession);
+            if (userParams.Profession != null)
+                users = users.Where(u => u.Profession == userParams.Profession);
 
             if (userParams.Likers)
             {

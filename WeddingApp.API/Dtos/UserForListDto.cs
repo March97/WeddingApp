@@ -24,5 +24,7 @@ namespace WeddingApp.API.Dtos
         public string Country { get; set; }
 
         public string PhotoUrl { get; set; }
+
+        public string token { get; set; }
     }
 }

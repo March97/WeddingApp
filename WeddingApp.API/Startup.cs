@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Http;
 using WeddingApp.API.Helpers;
 using AutoMapper;
 using Stripe;
+using WeddingApp.API.Services;
 
 namespace WeddingApp.API
 {
@@ -45,10 +46,13 @@ namespace WeddingApp.API
             services.AddCors();
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
             services.AddAutoMapper(typeof(UserRepository).Assembly);
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IMessagesService, MessagesService>();
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPlaceRepository, PlaceRepository>();
             services.AddScoped<IReservationRepository, ReservationRepository>();
+            
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {
                     options.TokenValidationParameters = new TokenValidationParameters
