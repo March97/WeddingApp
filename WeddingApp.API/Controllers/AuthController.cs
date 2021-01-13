@@ -45,7 +45,7 @@ namespace WeddingApp.API.Controllers
             try {
                 toReturn = await _service.Login(userForLoginDto);
             } catch (Exception e) {
-                return BadRequest(e);
+                return BadRequest("" + e);
             }
 
             var user = toReturn.Item1;

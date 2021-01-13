@@ -9,6 +9,7 @@ using WeddingApp.API.Helpers;
 using WeddingApp.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WeddingApp.API.Services;
 
 namespace WeddingApp.API.Controllers
 {
@@ -18,12 +19,10 @@ namespace WeddingApp.API.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly IUserRepository _repo;
-        private readonly IMapper _mapper;
-        public UsersController(IUserRepository repo, IMapper mapper)
+        private readonly IUsersService _service;
+        public UsersController(IUsersService service)
         {
-            _mapper = mapper;
-            _repo = repo;
+            _service = service;
         }
 
         [HttpGet]
@@ -31,21 +30,17 @@ namespace WeddingApp.API.Controllers
         {
             var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            var userFromRepo = await _repo.GetUser(currentUserId);
+            Tuple<IEnumerable<UserForListDto>, PagedList<User>> t;
+            try {
+                t = await _service.GetUsers(userParams, currentUserId);
+            } catch (Exception e) {
+                return BadRequest("" + e);
+            }
 
-            userParams.UserId = currentUserId;
+            Response.AddPagination(t.Item2.CurrentPage, t.Item2.PageSize, 
+                t.Item2.TotalCount, t.Item2.TotalPages);
 
-            // if (string.IsNullOrEmpty(userParams.Gender))
-            // {
-            //     userParams.Gender = userFromRepo.Gender == "male" ? "female" : "male";
-            // }
-
-            var users = await _repo.GetUsers(userParams);
-
-            var usersToReturn = _mapper.Map<IEnumerable<UserForListDto>>(users);
-
-            Response.AddPagination(users.CurrentPage, users.PageSize, 
-                users.TotalCount, users.TotalPages);
+            var usersToReturn = t.Item1;
 
             return Ok(usersToReturn);
         }
@@ -53,10 +48,12 @@ namespace WeddingApp.API.Controllers
         [HttpGet("{id}", Name="GetUser")]
         public async Task<IActionResult> GetUser(int id)
         {
-            var user = await _repo.GetUser(id);
-
-            var userToReturn = _mapper.Map<UserForDetailedDto>(user);
-
+            UserForDetailedDto userToReturn;
+            try {
+                userToReturn = await _service.GetUser(id);
+            } catch (Exception e) {
+                return BadRequest("" + e);
+            }
             return Ok(userToReturn);
         }
 
@@ -66,14 +63,12 @@ namespace WeddingApp.API.Controllers
             if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var userFromRepo = await _repo.GetUser(id);
-
-            _mapper.Map(userForUpdateDto, userFromRepo);
-
-            if (await _repo.SaveAll())
+            try {
+                var result = await _service.UpdateUser(id, userForUpdateDto);
                 return NoContent();
-
-            throw new Exception($"Updating user {id} failed on save");
+            } catch (Exception e) {
+                return BadRequest("" + e);
+            }
         }
 
         [HttpPost("{id}/like/{recipientId}")]
@@ -82,26 +77,12 @@ namespace WeddingApp.API.Controllers
             if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var like = await _repo.GetLike(id, recipientId);
-
-            if (like != null) 
-                return BadRequest("You already liked this user");
-
-            if (await _repo.GetUser(recipientId) == null)
-                return NotFound();
-
-            like = new Like
-            {
-                LikerId = id,
-                LikeeId = recipientId
-            };
-
-            _repo.Add<Like>(like);
-
-            if (await _repo.SaveAll())
+            try {
+                var result = await _service.LikeUser(id, recipientId);
                 return Ok();
-
-            return BadRequest("Failed to like user");
+            } catch (Exception e) {
+                return BadRequest("" + e);
+            }
         }
     }
 }

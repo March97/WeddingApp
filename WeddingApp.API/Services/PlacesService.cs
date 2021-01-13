@@ -12,23 +12,23 @@ namespace WeddingApp.API.Services
     public class PlacesService : IPlacesService
     {
         private readonly IPlaceRepository _repo;
-        private readonly IUserRepository _repoDating;
+        private readonly IUserRepository _repoUser;
         private readonly IMapper _mapper;
-        public PlacesService(IPlaceRepository repo, IUserRepository repoDating, IMapper mapper)
+        public PlacesService(IPlaceRepository repo, IUserRepository repoUser, IMapper mapper)
         {
             _mapper = mapper;
             _repo = repo;
-            _repoDating = repoDating;
+            _repoUser = repoUser;
         }
         public async Task<PlaceForReturnDto> AddPlaceForUser(int userId, PlaceForCreationDto placeForCreationDto)
         {
-            var userFromRepo = await _repoDating.GetUser(userId);
+            var userFromRepo = await _repoUser.GetUser(userId);
 
             var placeToCreate = _mapper.Map<Place>(placeForCreationDto);
 
             userFromRepo.Places.Add(placeToCreate);
 
-            if (await _repoDating.SaveAll())
+            if (await _repoUser.SaveAll())
             {
                 var placeToReturn = _mapper.Map<PlaceForReturnDto>(placeToCreate);
                 return placeToReturn;

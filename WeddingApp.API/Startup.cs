@@ -51,6 +51,8 @@ namespace WeddingApp.API
             services.AddScoped<IPhotosService, PhotosService>();
             services.AddScoped<IPhotosForPlaceService, PhotosForPlaceService>();
             services.AddScoped<IPlacesService, PlacesService>();
+            services.AddScoped<IReservationsService, ReservationsService>();
+            services.AddScoped<IUsersService, UsersService>();
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPlaceRepository, PlaceRepository>();

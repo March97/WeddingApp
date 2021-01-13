@@ -9,6 +9,7 @@ using WeddingApp.API.Data;
 using WeddingApp.API.Dtos;
 using WeddingApp.API.Helpers;
 using WeddingApp.API.Models;
+using WeddingApp.API.Services;
 
 namespace WeddingApp.API.Controllers
 {
@@ -17,17 +18,11 @@ namespace WeddingApp.API.Controllers
     [ApiController]
     public class ReservationsController : ControllerBase
     {
-        private readonly IReservationRepository _repoRes;
-        private readonly IUserRepository _repoDating;
-        private readonly IPlaceRepository _repoPlace;
-        private readonly IMapper _mapper;
+        private readonly IReservationsService _service;
 
-        public ReservationsController(IReservationRepository repoRes, IUserRepository repoDating, IPlaceRepository repoPlace, IMapper mapper)
+        public ReservationsController(IReservationsService service)
         {
-            _repoDating = repoDating;
-            _repoRes = repoRes;
-            _mapper = mapper;
-            _repoPlace = repoPlace;
+            _service = service;
         }
 
         [HttpPost]
@@ -36,60 +31,46 @@ namespace WeddingApp.API.Controllers
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var resToCreate = _mapper.Map<Reservation>(reservationForCreationDto);
-            var place = await _repoPlace.GetPlace(resToCreate.PlaceId);
+            bool result;
 
-            if (place.Capacity < resToCreate.AmountOfGuests) {
-                return BadRequest("Too many guests for this place.");
-            } else
-            if (await _repoRes.CheckReservationByDate(resToCreate.Date, resToCreate.PlaceId)) {
-                return BadRequest($"Date {resToCreate.Date.Date} is already booked for this place.");
-            } else
-            if (resToCreate.Date.Date < DateTime.Now) {
-                return BadRequest("You have to choose minimum tomorrow date.");
-            }
-            else {
-                resToCreate.Cost = resToCreate.AmountOfGuests * place.Price;
-                resToCreate.Date = resToCreate.Date.Date;
-                _repoRes.Add(resToCreate);
-
-                if (await _repoRes.SaveAll())
-                {
-                    return Ok();
-                }
-                throw new System.Exception("Creating the reservation field on save");
+            try {
+                result = await _service.AddReservation(userId, reservationForCreationDto);
+                return Ok();
+            } catch (Exception e) {
+                return BadRequest("" + e);
             }
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetMessagesForUser(int userId)
+        public async Task<IActionResult> GetReservationsForUser(int userId)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var reservationsFromRepo = await _repoRes.GetReservationsForUser(userId);
-
-            var reservations = _mapper.Map<IEnumerable<ReservationToReturnDto>>(reservationsFromRepo);
-
-            return Ok(reservations);
+            IEnumerable<ReservationToReturnDto> reservations;
+            
+            try {
+                reservations = await _service.GetReservationsForUser(userId);
+                return Ok(reservations);
+            } catch (Exception e) {
+                return BadRequest("" + e);
+            }
         }
 
         [HttpGet("places/{placeId}")]
-        public async Task<IActionResult> GetMessagesForPlace(int userId, int placeId)
+        public async Task<IActionResult> GetReservationsForPlace(int userId, int placeId)
         {
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var place = await _repoPlace.GetPlace(placeId);
+            IEnumerable<ReservationToReturnDto> reservations;
 
-            if (place.UserId != userId)
-                return Unauthorized();
-
-            var reservationsFromRepo = await _repoRes.GetReservationsForPlace(placeId);
-
-            var reservations = _mapper.Map<IEnumerable<ReservationToReturnDto>>(reservationsFromRepo);
-
-            return Ok(reservations);
+            try {
+                reservations = await _service.GetReservationsForPlace(userId, placeId);
+                return Ok(reservations);
+            } catch (Exception e) {
+                return BadRequest("" + e);
+            }
         }
 
         [HttpDelete("{id}")]
@@ -98,28 +79,27 @@ namespace WeddingApp.API.Controllers
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var reservationFromRepo = await _repoRes.GetReservation(id);
+            bool result;
 
-            if (userId != reservationFromRepo.UserId)
-                return Unauthorized();
-
-            _repoRes.Delete(reservationFromRepo);
-
-            if (await _repoRes.SaveAll())
+            try {
+                result = await _service.DeleteReservation(userId, id);
                 return Ok();
-
-            return BadRequest($"Failed to delete the reservation id: {id}");
+            } catch (Exception e) {
+                return BadRequest("" + e);
+            }
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> PayReservation(int id) 
         {
-            await _repoRes.PayReservation(id);
+            bool result;
 
-            if (await _repoRes.SaveAll())
+            try {
+                result = await _service.PayReservation(id);
                 return Ok();
-
-            return BadRequest($"Failed to paid the reservation id: {id}");
+            } catch (Exception e) {
+                return BadRequest("" + e);
+            }
         }
     }
 }

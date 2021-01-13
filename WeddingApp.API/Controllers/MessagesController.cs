@@ -76,7 +76,7 @@ namespace WeddingApp.API.Controllers
             try {
                 messageToReturn = await _service.CreateMessage(userId, messageForCreationDto);
             } catch (Exception e) {
-                return BadRequest(e);
+                return BadRequest("" + e);
             }
 
             return CreatedAtRoute("GetMessage", 
@@ -92,7 +92,7 @@ namespace WeddingApp.API.Controllers
             try {
                 var a = await _service.DeleteMessage(id, userId);
             } catch (Exception e) {
-                return BadRequest(e);
+                return BadRequest("" + e);
             }
 
             return NoContent();
@@ -107,7 +107,7 @@ namespace WeddingApp.API.Controllers
             try {
                 var a = await _service.MarkMessageAsRead(userId, id);
             } catch (Exception e) {
-                return BadRequest(e);
+                return BadRequest("" + e);
             }
 
             return NoContent();

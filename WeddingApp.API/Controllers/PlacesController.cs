@@ -1,7 +1,5 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
-using AutoMapper;
-using WeddingApp.API.Data;
 using WeddingApp.API.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -35,7 +33,7 @@ namespace WeddingApp.API.Controllers
             try {
                 placeToReturn = await _service.AddPlaceForUser(userId, placeForCreationDto);
             } catch (Exception e) {
-                return BadRequest(e);
+                return BadRequest("" + e);
             }
             
             if (placeToReturn != null)
@@ -55,7 +53,7 @@ namespace WeddingApp.API.Controllers
             try {
                 places = await _service.GetPlacesForUser(userId);
             } catch (Exception e) {
-                return BadRequest(e);
+                return BadRequest("" + e);
             }
 
             return Ok(places);
@@ -73,7 +71,7 @@ namespace WeddingApp.API.Controllers
                 placesToReturn = t.Item1;
                 places = t.Item2;
             } catch (Exception e) {
-                return BadRequest(e);
+                return BadRequest("" + e);
             }
 
             Response.AddPagination(places.CurrentPage, places.PageSize, 
@@ -88,7 +86,7 @@ namespace WeddingApp.API.Controllers
             try {
                 return Ok(await _service.GetPlace(id));
             } catch (Exception e) {
-                return BadRequest(e);
+                return BadRequest("" + e);
             }
         }
 
@@ -102,7 +100,7 @@ namespace WeddingApp.API.Controllers
                 var result = await _service.UpdatePlace(userId, id, placeForUpdateDto);
                 return NoContent();
             } catch (Exception e) {
-                return BadRequest(e);
+                return BadRequest("" + e);
             }
         }
 
@@ -116,7 +114,7 @@ namespace WeddingApp.API.Controllers
                 var result = await _service.DeletePlace(userId, id);
                 return Ok();
             } catch (Exception e) {
-                return BadRequest(e);
+                return BadRequest("" + e);
             }
         }
     }

@@ -28,7 +28,7 @@ namespace WeddingApp.API.Controllers
             try {
                 photo = await _service.GetPhoto(id);
             } catch (Exception e) {
-                return BadRequest(e);
+                return BadRequest("" + e);
             }
             return Ok(photo);
         } 
@@ -61,7 +61,7 @@ namespace WeddingApp.API.Controllers
             try {
                 result = await _service.SetMainPhoto(userId, id);
             } catch (Exception e) {
-                return BadRequest(e);
+                return BadRequest("" + e);
             }
 
             return NoContent();
@@ -77,7 +77,7 @@ namespace WeddingApp.API.Controllers
             try {
                 result = await _service.DeletePhoto(userId, id);
             } catch (Exception e) {
-                return BadRequest(e);
+                return BadRequest("" + e);
             }
             
             return Ok();
