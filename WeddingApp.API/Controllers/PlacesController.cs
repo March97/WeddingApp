@@ -9,6 +9,7 @@ using WeddingApp.API.Models;
 using System.Collections.Generic;
 using System;
 using WeddingApp.API.Helpers;
+using WeddingApp.API.Services;
 
 namespace WeddingApp.API.Controllers
 {
@@ -17,14 +18,10 @@ namespace WeddingApp.API.Controllers
     [ApiController]
     public class PlacesController : ControllerBase
     {
-        private readonly IPlaceRepository _repo;
-        private readonly IUserRepository _repoDating;
-        private readonly IMapper _mapper;
-        public PlacesController(IPlaceRepository repo, IUserRepository repoDating, IMapper mapper)
+        private readonly IPlacesService _service;
+        public PlacesController(IPlacesService service)
         {
-            _mapper = mapper;
-            _repo = repo;
-            _repoDating = repoDating;
+            _service = service;
         }
 
         [HttpPost]
@@ -34,17 +31,15 @@ namespace WeddingApp.API.Controllers
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var userFromRepo = await _repoDating.GetUser(userId);
-
-            var placeToCreate = _mapper.Map<Place>(placeForCreationDto);
-
-            userFromRepo.Places.Add(placeToCreate);
-
-            if (await _repoDating.SaveAll())
-            {
-                var placeToReturn = _mapper.Map<PlaceForReturnDto>(placeToCreate);
-                return Ok();
+            PlaceForReturnDto placeToReturn;
+            try {
+                placeToReturn = await _service.AddPlaceForUser(userId, placeForCreationDto);
+            } catch (Exception e) {
+                return BadRequest(e);
             }
+            
+            if (placeToReturn != null)
+                return Ok();
 
             return BadRequest("Could not add the place");
         }
@@ -55,23 +50,31 @@ namespace WeddingApp.API.Controllers
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var places = await _repo.GetPlacesForUser(userId);
+            IEnumerable<PlacesForListDto> places;
 
-            var placesToReturn = _mapper.Map<IEnumerable<PlacesForListDto>>(places);
+            try {
+                places = await _service.GetPlacesForUser(userId);
+            } catch (Exception e) {
+                return BadRequest(e);
+            }
 
-            return Ok(placesToReturn);
+            return Ok(places);
         }
 
         [HttpGet("list")]
         public async Task<IActionResult> GetPlaces([FromQuery]PlaceParams placeParams)
         {
-            // var places = await _repo.GetPlaces();
+            PagedList<Place> places;
 
-            // var placesToReturn = _mapper.Map<IEnumerable<PlacesForListDto>>(places);
+            IEnumerable<PlacesForListDto> placesToReturn;
 
-            var places = await _repo.GetPlaces(placeParams);
-
-            var placesToReturn = _mapper.Map<IEnumerable<PlacesForListDto>>(places);
+            try {
+                var t = await _service.GetPlaces(placeParams);
+                placesToReturn = t.Item1;
+                places = t.Item2;
+            } catch (Exception e) {
+                return BadRequest(e);
+            }
 
             Response.AddPagination(places.CurrentPage, places.PageSize, 
                 places.TotalCount, places.TotalPages);
@@ -82,11 +85,11 @@ namespace WeddingApp.API.Controllers
         [HttpGet("{id}", Name="GetPlaces")]
         public async Task<IActionResult> GetPlace(int id)
         {
-            var place = await _repo.GetPlace(id);
-
-            //var placeToReturn = _mapper.Map<PlaceForReturnDto>(place);
-
-            return Ok(place);
+            try {
+                return Ok(await _service.GetPlace(id));
+            } catch (Exception e) {
+                return BadRequest(e);
+            }
         }
 
         [HttpPut("{id}")]
@@ -95,14 +98,12 @@ namespace WeddingApp.API.Controllers
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var placeFromRepo = await _repo.GetPlace(id);
-
-            _mapper.Map(placeForUpdateDto, placeFromRepo);
-
-            if (await _repo.SaveAll())
+            try {
+                var result = await _service.UpdatePlace(userId, id, placeForUpdateDto);
                 return NoContent();
-
-            throw new Exception($"Updating place {id} failed on save");
+            } catch (Exception e) {
+                return BadRequest(e);
+            }
         }
 
         [HttpDelete("{id}")]
@@ -111,17 +112,12 @@ namespace WeddingApp.API.Controllers
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var placeFromRepo = await _repo.GetPlace(id);
-
-            if (userId != placeFromRepo.UserId)
-                return Unauthorized();
-
-            _repo.Delete(placeFromRepo);
-
-            if (await _repo.SaveAll())
+            try {
+                var result = await _service.DeletePlace(userId, id);
                 return Ok();
-
-            return BadRequest($"Failed to delete the place id: {id}");
+            } catch (Exception e) {
+                return BadRequest(e);
+            }
         }
     }
 }
