@@ -48,6 +48,8 @@ namespace WeddingApp.API
             services.AddAutoMapper(typeof(UserRepository).Assembly);
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IMessagesService, MessagesService>();
+            services.AddScoped<IPhotosService, PhotosService>();
+            services.AddScoped<IPhotosForPlaceService, PhotosForPlaceService>();
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPlaceRepository, PlaceRepository>();
